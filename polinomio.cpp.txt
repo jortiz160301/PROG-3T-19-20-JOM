@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+
+class Polinomio{
+	private: 
+		float *coef;
+		int grado;
+		int grado_max;
+	
+	public: 
+		Polinomio();
+		void setCoef(float coef_in);
+		float getCoef() const;
+		void setGrado(int grado_in);
+		int getGrado()const;
+		void setGrado_max(int gradomax_in);
+		int getGrado_max() const;
+		
+		void printPolinomio() const;
+};	
+	
+	
+	Polinomio::Polinomio(){
+        
+        coef = new float[10];
+		grado = 0;
+		grado_max = 0;
+	}
+
+	void Polinomio :: setCoef(float coef_in){
+		coef[grado]=coef_in;
+	}
+	
+	float Polinomio :: getCoef()const{
+		return coef[grado];
+	}
+	
+	void Polinomio :: setGrado(int grado_in){
+		grado = grado_in;
+	}
+	
+	int Polinomio :: getGrado()const{
+		return grado;
+	}
+	//introducidsos el set y get de grado_max
+	void Polinomio :: setGrado_max(int gradomax_in){
+		grado_max = gradomax_in;
+	}
+	
+	int Polinomio :: getGrado_max()const{
+		return grado_max;
+	}
+	
+	void Polinomio :: printPolinomio()const{
+		cout<<"El polinomio es: "<<endl;
+		
+		for(int i = 0; i<= grado_max; i++){
+			cout<<coef[i]<<"x^"<<i;
+			if(i!= grado_max){
+
+				cout<<"+";
+			}
+		}
+		
+	}
+	
+	
+int main(){	
+	float coef_in;
+	int gradomax_in;
+	Polinomio poli;
+	
+	
+	
+	do{
+		cout<<"Introduzca el grado máximo del polinomio que quiere introducir: "<<endl;
+		cin>>gradomax_in;
+		poli.setGrado_max(gradomax_in);
+	}while(gradomax_in <= 0 || gradomax_in > 10);
+	
+	for(int i = 0; i<= gradomax_in; i++){
+		
+		poli.setGrado(i);
+		
+		
+		if(i == 0){
+			cout<<"Introduzca el término independiente: "<<endl;
+		}else{
+			cout<<"Introduzca el coeficiente para x^"<<i<<":"<<endl;
+		}
+		
+		cin>>coef_in;
+		
+		poli.setCoef(coef_in);
+		
+	}
+	
+	poli.printPolinomio();
+	
+	cout<<endl;
+}
