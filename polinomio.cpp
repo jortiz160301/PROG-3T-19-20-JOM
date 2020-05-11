@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-bool testing = true;
 class Polinomio{
 	private: 
 		float *coef;
@@ -10,9 +9,11 @@ class Polinomio{
 	
 	public: 
 		Polinomio();
+		Polinomio(const Polinomio &p);
 		void setCoef(float coef_in);
 		void setCoefv2(int grado, float coef_in);
-		float getCoef() const;
+		void setCoefv3(int grado, float coef_in);
+		float getCoef(int i) const;
 		void setGrado(int grado_in);
 		int getGrado()const;
 		void setGrado_max(int gradomax_in);
@@ -20,6 +21,9 @@ class Polinomio{
 		void resize(int grado);
 		void printPolinomio() const;
 		void testing();
+		void sumarV1(const Polinomio &p2);
+		void sumarV2(const Polinomio &p2,const Polinomio &p3);
+		Polinomio sumarV3(const Polinomio &p2);
 		~Polinomio();
 };	
 	
@@ -43,12 +47,57 @@ class Polinomio{
 		}
 		
 	
+	Polinomio :: Polinomio(const Polinomio &p){
+			cout<<"Uso el constructor por copia:"<<endl;
+			this->grado_max = p.getGrado_max();
+			this->grado = p.getGrado();
+			this->coef = new float [this->grado_max+1];
+			for(int i = 0; i<this->grado_max; i++){
+				this->coef[i] = p.coef[i];
+			}
+	}
 
 	void Polinomio :: setCoef(float coef_in){
 		coef[grado]=coef_in;
 	}
 	
+	
+	
 	void Polinomio :: setCoefv2(int grado, float coef_in){
+		if(grado >= 0){
+			if(grado<grado_max){
+				coef[grado]=coef_in;
+			
+			}else{
+				
+				
+				float *aux;
+				aux = new float[grado+1]; 
+		
+				for (int i=0; i <= grado; i++){
+				    aux[i] = 0.0;
+				}
+			  
+				for (int i=0; i <= grado_max; i++){
+					aux[i] = coef[i];
+				}
+				delete[] coef;
+				coef = aux;
+				grado_max = grado;
+				
+
+				coef[grado]=coef_in;
+				
+			}
+		}else{
+		cout<<"Ha introducido un valor negativo como grado. Este no se va a tomar en cuenta."<<endl;
+		
+		}
+	}
+	
+	
+	
+	void Polinomio :: setCoefv3(int grado, float coef_in){
 		if(grado >= 0){
 			if(grado<grado_max){
 				coef[grado]=coef_in;
@@ -64,8 +113,8 @@ class Polinomio{
 		}
 	}
 	
-	float Polinomio :: getCoef()const{
-		return coef[grado];
+	float Polinomio :: getCoef(int i)const{
+		return coef[i];
 	}
 	
 	void Polinomio :: setGrado(int grado_in){
@@ -141,7 +190,7 @@ class Polinomio{
 			
 			cout<<"Y creo un monomio en ese grado haciendo setCoefv2(3,2) y lo muestro: "<<endl;
 			setCoefv2(3,2);
-			cout<<getCoef()<<"x^"<<getGrado()<<endl;
+			cout<<getCoef(getGrado())<<"x^"<<getGrado()<<endl;
 			cout<<"Ahora introduzco un monomio de grado menor al actual haciendo setCoefv2(1,3) y muestro el POLINOMIO: "<<endl;
 			setCoefv2(2,1);
 			
@@ -158,7 +207,7 @@ class Polinomio{
 			cout<<"Inserto un monomio en un grado mayor al actual haciendo setCoefv2(3,2) y lo muestro: "<<endl;
 			setCoefv2(3,2);
 			setGrado(3);
-			cout<<getCoef()<<"x^"<<getGrado()<<endl;
+			cout<<getCoef(getGrado())<<"x^"<<getGrado()<<endl;
 			setGrado(2);
 			cout<<"Muestro el POLINOMIO"<<endl;
 			printPolinomio();
@@ -170,7 +219,7 @@ class Polinomio{
 			cout<<"Inserto un monomio en un grado mayor al máximo haciendo setCoefv2(7,2) y lo muestro: "<<endl;
 			setCoefv2(7,2);
 			setGrado(7);
-			cout<<getCoef()<<"x^"<<getGrado()<<endl;
+			cout<<getCoef(getGrado())<<"x^"<<getGrado()<<endl;
 			setGrado(3);
 			cout<<"Muestro el POLINOMIO"<<endl;
 			printPolinomio();
@@ -181,7 +230,7 @@ class Polinomio{
 		}else if(opcion ==5){
 			cout<<"Establezco un grado actual haciendo setGrado(3)"<<endl;
 			setGrado(3);
-			cout<<"Y creo un monomio con coeficiente = 0 y grado 3"<<endl;
+			cout<<"Y creo un monomio con coeficiente = 0 y grado = 3"<<endl;
 			setCoefv2(3,0);
 			printPolinomio();
 		
@@ -200,14 +249,63 @@ class Polinomio{
 	}
 	
 	
+
+	void Polinomio::sumarV1(const Polinomio &p2){
+		
+		if(p2.getGrado_max() > this->getGrado_max()){
+			this->setGrado_max(p2.getGrado_max());
+		}
+		for(int i=0;i<=getGrado_max();i++){
+			this->setCoefv3(i,(this->getCoef(i) + p2.getCoef(i)));
+		}
+		printPolinomio();
+	}
+	
+	
+
+	
+	void Polinomio::sumarV2(const Polinomio &p2,const Polinomio &p3){
+		if(p2.getGrado_max() > p3.getGrado_max()){
+			this->setGrado_max(p2.getGrado_max());
+		}else{
+			this->setGrado_max(p3.getGrado_max());
+		}
+		for(int i=0;i<=this->getGrado_max();i++){
+			this->setCoefv3(i,(p3.getCoef(i) + p2.getCoef(i)));
+		}
+		printPolinomio();
+	}
+	/*
+	Prototipo: Polinomio Polinomio::sumarV3(const Polinomio &p2);
+	LLamada: Polinomio res = p1.sumarV3(p2);
+
+	USO AUTOMÁTICO DEL CONSTRUCTOR POR COPIA EN LA ASIGNACIÓN
+	En realidad la Llamada equivale a: Polinomio res (p1.sumarV3(p2));
+	*/
+	Polinomio Polinomio::sumarV3(const Polinomio &p2){
+		Polinomio interno;
+	
+		if(p2.getGrado_max() > interno.getGrado_max()){
+			interno.setGrado_max(p2.getGrado_max());
+		}
+		
+		for(int i=0;i<=getGrado_max();i++){
+			interno.setCoefv3(i,(interno.getCoef(i) + p2.getCoef(i)));
+		}
+		
+		return interno;
+		
+	}
+	
 int main(){	
 	float coef_in= 0;
 	int grado_in;
 	int gradomax_in;
 	Polinomio poli;
+	Polinomio suma;
 	int miembros;
 	
-	poli.testing();
+	//poli.testing();
 	
 	
 	cout<<"Introduzca grado máximo del polinomio"<<endl;
@@ -242,11 +340,20 @@ int main(){
 		
 		poli.setCoefv2(grado_in,coef_in);
 
-		cout<<poli.getGrado_max()<<endl;
+	
 
 	}
 	
+	 
 	poli.printPolinomio();
 	
 	cout<<endl;
+	
+	//declaro un polinomio copia y uso el método de copia
+	Polinomio copia(poli);
+	
+	//poli.sumarV1(copia);
+	//suma.sumarV2(poli,copia);
+	Polinomio res = poli.sumarV3(copia);
+	res.printPolinomio();
 }
