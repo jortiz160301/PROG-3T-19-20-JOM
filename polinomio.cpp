@@ -24,6 +24,7 @@ class Polinomio{
 		void sumarV1(const Polinomio &p2);
 		void sumarV2(const Polinomio &p2,const Polinomio &p3);
 		Polinomio sumarV3(const Polinomio &p2);
+		Polinomio* sumarV4(const Polinomio *p2);
 		~Polinomio();
 };	
 	
@@ -285,18 +286,46 @@ class Polinomio{
 	Polinomio Polinomio::sumarV3(const Polinomio &p2){
 		Polinomio interno;
 	
-		if(p2.getGrado_max() > interno.getGrado_max()){
+		if(p2.getGrado_max() > this->getGrado_max()){
 			interno.setGrado_max(p2.getGrado_max());
+		}else{
+			interno.setGrado_max(this->getGrado_max());
 		}
 		
 		for(int i=0;i<=getGrado_max();i++){
-			interno.setCoefv3(i,(interno.getCoef(i) + p2.getCoef(i)));
+			interno.setCoefv3(i,(this->getCoef(i) + p2.getCoef(i)));
 		}
 		
 		return interno;
 		
 	}
 	
+	/*
+	Prototipo: Polinomio* Polinomio::sumarV4(const Polinomio *p2);
+	LLamada: Polinomio* res = p1->sumarV4(p2);
+
+	Borrado de Variables Dinámicas:
+	delete p1; //invoca al destructor
+	delete p2;
+	delete res;
+	*/
+	
+	Polinomio* Polinomio::sumarV4(const Polinomio *p2){
+		Polinomio *interno;
+		interno = new Polinomio();
+		
+		if(p2->getGrado_max() > this->getGrado_max()){
+			interno->setGrado_max(p2->getGrado_max());
+		}else{
+			interno->setGrado_max(this->getGrado_max());
+		}
+		
+		for(int i=0;i<=getGrado_max();i++){
+			interno->setCoefv3(i,(this->getCoef(i) + p2->getCoef(i)));
+		}
+		return interno;
+		delete interno;
+	}
 int main(){	
 	float coef_in= 0;
 	int grado_in;
@@ -307,8 +336,8 @@ int main(){
 	
 	//poli.testing();
 	
-	
-	cout<<"Introduzca grado máximo del polinomio"<<endl;
+	/*
+	cout<<"Introduzca grado máximo del polinomio 1"<<endl;
 	cin>>gradomax_in;
 
 	if(gradomax_in > poli.getGrado_max()){//Si el grado máximo introducido es mayor al preexistente, se establece este como grado_max  y se hace resize
@@ -343,17 +372,122 @@ int main(){
 	
 
 	}
+	*/
+	//ESTABLEZCO EL DIN1
 	
+	
+	
+	
+	
+	Polinomio *din1;
+	din1 = new Polinomio();
+	
+	cout<<"Introduzca grado máximo del polinomio 1"<<endl;
+	cin>>gradomax_in;
 	 
-	poli.printPolinomio();
+	 if(gradomax_in > din1->getGrado_max()){//Si el grado máximo introducido es mayor al preexistente, se establece este como grado_max  y se hace resize
+		din1->setGrado_max(gradomax_in);
+		din1->resize(gradomax_in);
+	}
+	
+	for(int i=0;i<din1->getGrado_max();i++){
+
+		do{
+			cout<<"Introduzca el grado del monomio"<<endl;
+			cin>>grado_in;
+			
+			if(grado_in < 0){
+				cout<<"Por favor, introduzca un grado positivo."<<endl;
+			}
+			
+		}while(grado_in < 0);
+		
+		if(grado_in<din1->getGrado_max()){
+			din1->setGrado(grado_in);
+		}else{
+			din1->resize(grado_in);
+		}
+
+
+		cout<<"Introduzca el coeficiente para x^"<<grado_in<<":"<<endl;
+		cin>>coef_in;
+		
+		din1->setCoefv2(grado_in,coef_in);
+
+	
+
+	}
+	 
+	 
+	 gradomax_in = 0;
+	 grado_in = 0;
+	 
+	//poli.printPolinomio();
+	din1->printPolinomio();
 	
 	cout<<endl;
 	
-	//declaro un polinomio copia y uso el método de copia
-	Polinomio copia(poli);
 	
-	//poli.sumarV1(copia);
-	//suma.sumarV2(poli,copia);
-	Polinomio res = poli.sumarV3(copia);
-	res.printPolinomio();
+	
+	//ESTABLEZCO EL DIN2
+	
+	
+	
+	//declaro un polinomio copia y uso el método de copia
+	//Polinomio copia(poli);
+	Polinomio *din2;
+	din2 = new Polinomio();
+	cout<<"Introduzca grado máximo del polinomio 2"<<endl;
+	cin>>gradomax_in;
+	 
+	 if(gradomax_in > din2->getGrado_max()){//Si el grado máximo introducido es mayor al preexistente, se establece este como grado_max  y se hace resize
+		din2->setGrado_max(gradomax_in);
+		din2->resize(gradomax_in);
+	}
+	
+	for(int i=0;i<din2->getGrado_max();i++){
+
+		do{
+			cout<<"Introduzca el grado del monomio"<<endl;
+			cin>>grado_in;
+			
+			if(grado_in < 0){
+				cout<<"Por favor, introduzca un grado positivo."<<endl;
+			}
+			
+		}while(grado_in < 0);
+		
+		if(grado_in<din2->getGrado_max()){
+			din2->setGrado(grado_in);
+		}else{
+			din2->resize(grado_in);
+		}
+
+
+		cout<<"Introduzca el coeficiente para x^"<<grado_in<<":"<<endl;
+		cin>>coef_in;
+		
+		din2->setCoefv2(grado_in,coef_in);
+
+	
+
+	}
+	 
+	
+	 
+	 
+	//poli.printPolinomio();
+	din2->printPolinomio();
+	
+	cout<<endl;
+	
+	Polinomio* res = din1->sumarV4(din2);
+	res->printPolinomio();
+	delete res;
+	
+	//V1->  poli.sumarV1(copia);
+	//V2->  suma.sumarV2(poli,copia);
+	//V3->  Polinomio res = poli.sumarV3(copia);
+	//		res.printPolinomio();
+	
 }
