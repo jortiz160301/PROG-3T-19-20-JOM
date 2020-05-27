@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+#include "usuario.h"
+
+Usuario::Usuario(){
+	//this->v_fotos = new Foto[10];
+	this->login = "";
+	this->nombre = "";
+	this->apellido = "";
+	this->perfil_usuario = "";
+}
+
+
+void Usuario::setLogin(string login_in){
+	this->login = login_in;
+}
+
+void Usuario::setNombre(string nombre_in){
+	this->nombre = nombre_in;
+}
+
+void Usuario::setApellido(string apellido_in){
+	this->apellido = apellido_in;
+}
+
+void Usuario::setperfil_usuario(string perfil_usuario_in){
+	this->perfil_usuario = perfil_usuario_in;
+}
+/*
+void Usuario::setdimFotos(int dim_vfotos_in){
+	this->dim_vfotos = dim_vfotos_in;
+}
+
+void Usuario::settotalFotosUsuario(int totalFotosUsuario_in){
+	this->totalFotosUsuario = totalFotosUsuario_in;
+}
+
+void Usuario::setFoto(int posicion, Foto f_in){
+	this->v_Fotos[posicion] = f_in;
+}
+*/
+string Usuario::getLogin(){
+	return login;
+}	
+
+string Usuario::getNombre(){
+	return nombre;
+}
+
+string Usuario::getApellido(){
+	return apellido;
+}
+
+string Usuario::getperfil_usuario(){
+	return perfil_usuario;
+}
+/*
+int Usuario::getdimFotos(){
+	return dim_vfotos;
+}
+
+int Usuario::gettotalFotosUsuario(){
+	return totalFotosUsuario;
+}
+
+Foto Usuario::getFoto(posicion){
+	return v_fotos[posicion];
+}
+*/
