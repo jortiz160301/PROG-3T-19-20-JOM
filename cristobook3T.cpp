@@ -17,7 +17,7 @@ class Foto{
 		string getRuta();
 		string getTipo();
 		unsigned long int getTamanio();
-}
+};
 
 
 class Usuario{
@@ -49,7 +49,47 @@ class Usuario{
 		int gettotalFotosUsuario();
 		Foto getFoto(int posicion);
 
+};
+
+/*
+Usuario :: Usuario(){
+
 }
+*/
+
+void Usuario :: setLogin(string login_in){
+	login = login_in;
+}
+
+void Usuario :: setNombre(string nombre_in){
+	nombre = nombre_in;
+}
+
+void Usuario :: setApellido(string apellido_in){
+	apellido = apellido_in;
+}
+
+void Usuario :: setperfil_usuario(string perfil_usuario_in){
+	perfil_usuario = perfil_usuario_in;
+}
+
+void Usuario :: setdimFotos(int dim_vfotos_in){
+	dim_vfotos = dim_vfotos_in;
+}
+
+void Usuario :: settotalFotosUsuario(int totalFotosUsuario_in){
+	totalFotosUsuario = totalFotosUsuario_in;
+}
+
+void Usuario :: setFoto(int posicion, Foto f_in){
+	v_Fotos[posicion] = f_in
+}
+
+
+
+
+
+
 
 
 
@@ -63,12 +103,59 @@ class TablaUsuarios{
 		//La reserva siempre es exacta y al tamaño, la dimensión, siempre coincide con las útiles.
 	
 	public:
+		TablaUsuarios ();
 		void setPunteroapuntero(int posicion, Usuario* u);
 		void setTotaltuplas(int totaltuplas_in);
 		
 		Usuario* getPunteroapuntero(int posicion);
 		int getTotaltuplas();
+};
+
+
+
+TablaUsuarios :: TablaUsuarios(){
+	punteroapuntero = new Usuario*[setTotaltuplas(4)];//////////////////////////////////////////////////////////
 }
+
+void TablaUsuarios :: setPunteroapuntero(int posicion, Usuario* u){
+	punteroapuntero[posicion]=u;
+}
+
+void TablaUsuarios :: setTotaltuplas(int totaltuplas_in){
+	totaltuplas = totaltuplas_in;
+}
+
+Usuario* TablaUsuarios :: getPunteroapuntero(int posicion){
+	return punteroapuntero[posicion];
+}
+
+int TablaUsuarios :: getTotaltuplas(){
+	return totaltuplas;
+}
+
+
+
+
+
+
+
+
+/**
+ * @brief Aquí creo un vector de pounteros a usuarios y meto usuarios de ejemplo
+ * @param 
+ * @pre 
+ * @post
+ * @author
+ * @version
+ */
+ 
+
+void crearTablaUsuarios(TablaUsuarios t){
+setTotaltuplas(6);
+	t.punteroapuntero = new Usuario*[t.getTotaltuplas()];
+}
+
+
 
 
 void menu(TablaUsuarios &t){
@@ -134,4 +221,6 @@ void menu(TablaUsuarios &t){
 	}while(menu == true && (opcion != 1 || opcion != 2 || opcion !=3 || opcion !=4 || opcion !=5 || opcion !=6 || opcion !=7 || opcion !=8 || opcion !=9 || opcion !=10 ));
 
 	
+}
+int main(){
 }
