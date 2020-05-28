@@ -2,18 +2,47 @@
 using namespace std;
 #include "vista.h"
 
+	
 Vista::Vista(){
 	this->t = new TablaUsuarios;
-}
+};
+void Vista :: crearTablaUsuarios(){
+	
+	Normal* Juan;
+	Juan = new Normal;
+	
+	Juan->setNombre("Juan");
+	Juan->setApellido("Perez");
+	Juan->setLogin("Juan123");
+	Juan->setperfil_usuario("Biografía de Juan");
+	Juan->setdimFotos(10);
+	Juan->settotalFotosUsuario(4);
+	this->t->setPunteroapuntero(0,Juan);
+	
+
+	Normal* Antonio;
+	Antonio = new Normal;
+	
+	
+	Antonio->setNombre("Antonio");
+	Antonio->setApellido("García");
+	Antonio->setLogin("Antonio123");
+	Antonio->setperfil_usuario("Biografía de Antonio");
+	Antonio->setdimFotos(10);
+	Antonio->settotalFotosUsuario(4);
+	this->t->setPunteroapuntero(1,Antonio);
+
+
+
+};
 
 
 void Vista :: menu (){
 	int opcion;
 	bool menu=true;
-	bool imprimir = true;
-	bool tabla_creada = false;
+
 	
-	do{
+	//do{
 		cout<<"\nElija introduciendo un número: "<<endl;
 		
 		cout<<"1: Crear la tabla de usuarios."<<endl;
@@ -66,7 +95,7 @@ void Vista :: menu (){
 		
 	
 	
-	}while(menu == true && (opcion != 1 || opcion != 2 || opcion !=3 || opcion !=4 || opcion !=5 || opcion !=6 || opcion !=7 || opcion !=8 || opcion !=9 || opcion !=10 ));
+	//}while(menu == true && (opcion != 1 || opcion != 2 || opcion !=3 || opcion !=4 || opcion !=5 || opcion !=6 || opcion !=7 || opcion !=8 || opcion !=9 || opcion !=10 ));
 
 	
 }

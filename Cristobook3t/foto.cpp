@@ -2,6 +2,9 @@
 #include "foto.h"
 using namespace std;
 
+Foto::Foto(){
+
+}
 void Foto :: setRuta(string ruta_in){
 	ruta = ruta_in;
 }
@@ -25,6 +28,5 @@ string Foto :: getTipo(){
 unsigned long int Foto :: getTamanio(){
 	return tamanio;
 }
-
 
 

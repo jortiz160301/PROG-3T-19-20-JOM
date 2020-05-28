@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 #include "foto.h"
+#include <stdlib.h>
 class Usuario{
 
 	protected: 
@@ -31,10 +32,41 @@ class Usuario{
 		*/
 };
 
+
 class Admin : public Usuario{
+	int total_consultas;
+	void setTotalConsultas();
+	int getTotalConsultas();
+	void buscarFotografias(string cadena);
+	
 	
 };
 
 class Normal : public Usuario{
+
+    public:    
 	
+		Normal() : Usuario(){
+	
+			this->v_fotos = new Foto[10];
+	
+			if(this->v_fotos == 0){
+				cerr << "no" ;
+				exit(-1);
+			}
+		
+	};
+
+	void setdimFotos(int dim_vfotos_in);
+	void settotalFotosUsuario(int totalFotosUsuario_in);
+	void setFoto(int posicion, Foto f_in);
+	int getdimFotos();
+	int gettotalFotosUsuario();
+	Foto getFoto(int posicion);
+	
+	protected: 
+	Foto* v_fotos; 
+	int totalFotosUsuario; //utiles del vector
+	double saldo;
+	int dim_vfotos; //Dimension del vector
 };

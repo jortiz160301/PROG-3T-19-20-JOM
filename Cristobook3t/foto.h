@@ -17,4 +17,3 @@ class Foto{
 		string getTipo();
 		unsigned long int getTamanio();
 };
-

@@ -16,4 +16,3 @@ class TablaUsuarios{
 		Usuario* getPunteroapuntero(int posicion);
 		int getTotaltuplas();
 };
-

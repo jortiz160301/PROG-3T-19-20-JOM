@@ -13,6 +13,7 @@ class Vista{
 	public:
 	Vista();
 	void menu();
+	void crearTablaUsuarios();
 	//void testing();
 	//todos los cin
 };

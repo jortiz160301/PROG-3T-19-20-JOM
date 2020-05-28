@@ -26,25 +26,25 @@ void Usuario::setApellido(string apellido_in){
 void Usuario::setperfil_usuario(string perfil_usuario_in){
 	this->perfil_usuario = perfil_usuario_in;
 }
-/*
-void Usuario::setdimFotos(int dim_vfotos_in){
+
+void Normal::setdimFotos(int dim_vfotos_in){
 	this->dim_vfotos = dim_vfotos_in;
 }
 
-void Usuario::settotalFotosUsuario(int totalFotosUsuario_in){
+void Normal::settotalFotosUsuario(int totalFotosUsuario_in){
 	this->totalFotosUsuario = totalFotosUsuario_in;
 }
 
-void Usuario::setFoto(int posicion, Foto f_in){
-	this->v_Fotos[posicion] = f_in;
+void Normal::setFoto(int posicion, Foto f_in){
+	v_fotos[posicion] = f_in;
 }
-*/
+
 string Usuario::getLogin(){
-	return login;
+	return this->login;
 }	
 
 string Usuario::getNombre(){
-	return nombre;
+	return this->nombre;
 }
 
 string Usuario::getApellido(){
@@ -54,16 +54,15 @@ string Usuario::getApellido(){
 string Usuario::getperfil_usuario(){
 	return perfil_usuario;
 }
-/*
-int Usuario::getdimFotos(){
-	return dim_vfotos;
-}
 
-int Usuario::gettotalFotosUsuario(){
+int Normal::getdimFotos(){
+	return dim_vfotos;
+};
+
+int Normal::gettotalFotosUsuario(){
 	return totalFotosUsuario;
 }
 
-Foto Usuario::getFoto(posicion){
+Foto Normal::getFoto(int posicion){
 	return v_fotos[posicion];
 }
-*/
