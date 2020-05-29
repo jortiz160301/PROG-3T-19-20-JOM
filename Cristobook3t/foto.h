@@ -16,4 +16,10 @@ class Foto{
 		string getRuta();
 		string getTipo();
 		unsigned long int getTamanio();
+		~Foto(){
+			this->ruta = "";
+			this->tipo = "";
+			this->tamanio = 0;
+		}
+		
 };

@@ -6,6 +6,97 @@ using namespace std;
 Vista::Vista(){
 	this->t = new TablaUsuarios;
 };
+/*
+Admin Vista :: construirUsuario(Usuario* u){
+    Admin* selecAdm;
+	cout<<"guay"<<endl;
+	return selecAdm;
+}
+
+Normal Vista :: construirUsuario(Usuario* u){
+     Normal* selecNor;
+	cout<<"guay"<<endl;
+	return selecNor;
+}
+*/
+
+/*
+Usuario* Vista :: construirUsuario(Usuario* u){
+    Normal* selecNor;
+	Admin* selecAdm;
+	bool adm = false;
+	if(Normal* n = dynamic_cast<Normal*>(u)){
+		Normal(u);
+		selecAdm -> ~Admin();
+		adm = false;
+	}
+	else if(Admin* n = dynamic_cast<Admin*>(u)){
+		Admin(u);
+		selecNor -> ~Normal();
+		adm = true;
+	}
+	if(adm ==true){
+		return selecAdm;
+	}else if(adm == false){
+		return selecNor;
+	}
+}
+*/
+void Vista :: crearUsuario(){
+	int opcion= 0;
+	string nombre_us;
+	string apellido_us;
+	string login_us;
+	string perfil_us;
+	
+	cout<<"Elija el tipo de usuario:"<<endl;
+	cout<<"1: Admin"<<endl;
+	cout<<"2: Normal"<<endl;
+	cin>>opcion;
+	
+	cout<<"Introduzca el nombre del usuario: "<<endl;
+	cin>>nombre_us;
+	
+	cout<<"Introduzca el apellido del usuario: "<<endl;
+	cin>>apellido_us;
+	
+	cout<<"Introduzca el login del usuario: "<<endl;
+	cin>>login_us;
+	
+	cout<<"Introduzca el perfil del usuario: "<<endl;
+	cin>>perfil_us;
+	
+	if(opcion == 1){
+		Admin* nuevoAdm = new Admin;
+		
+		//nuevoAdm = construirUsuario(nuevoAdm);
+		
+		nuevoAdm->setNombre(nombre_us);
+		nuevoAdm->setApellido(apellido_us);
+		nuevoAdm->setLogin(login_us);
+		nuevoAdm->setperfil_usuario(perfil_us);
+		
+		t->setPunteroapuntero(2,nuevoAdm);
+		
+		
+	}
+	else if(opcion == 2){
+		Normal* nuevoNor= new Normal;
+		//nuevoNor = construirUsuario(nuevoNor);
+		
+		nuevoNor->setNombre(nombre_us);
+		nuevoNor->setApellido(apellido_us);
+		nuevoNor->setLogin(login_us);
+		nuevoNor->setperfil_usuario(perfil_us);
+		
+		t->setPunteroapuntero(2,nuevoNor);
+		
+		
+	}
+	
+}
+
+
 void Vista :: crearTablaUsuarios(){
 	
 	Normal* Juan;
@@ -23,7 +114,6 @@ void Vista :: crearTablaUsuarios(){
 	Normal* Antonio;
 	Antonio = new Normal;
 	
-	
 	Antonio->setNombre("Antonio");
 	Antonio->setApellido("García");
 	Antonio->setLogin("Antonio123");
@@ -31,9 +121,10 @@ void Vista :: crearTablaUsuarios(){
 	Antonio->setdimFotos(10);
 	Antonio->settotalFotosUsuario(4);
 	this->t->setPunteroapuntero(1,Antonio);
-
-
-
+	
+	cout<<this->t->getPunteroapuntero(0)->getNombre()<<endl;
+	
+	this->t->setTotaltuplas(2);
 };
 
 
@@ -99,3 +190,45 @@ void Vista :: menu (){
 
 	
 }
+void Vista :: eliminarTabla(){
+	this->t-> ~TablaUsuarios();
+
+}
+
+void Vista :: imprimirUsuario(Usuario* u){
+	cout<<"Nombre: "<<u->getNombre()<<endl;
+	cout<<"Apellido: "<<u->getApellido()<<endl;
+	cout<<"Login: "<<u->getLogin()<<endl;
+	cout<<"Perfil: "<<u->getperfil_usuario()<<endl;
+	cout<<endl;
+}
+void Vista :: imprimirTabla(){
+	for(int i=0; i<3;i++){
+		imprimirUsuario(this->t->getPunteroapuntero(i));
+	}
+}
+void Vista :: insertarUsuario(){
+	TablaUsuarios* nueva = new TablaUsuarios;
+	
+	//nueva = new TablaUsuarios;
+	//this->t = new TablaUsuarios;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

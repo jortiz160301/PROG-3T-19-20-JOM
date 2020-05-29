@@ -2,7 +2,7 @@
 using namespace std;
 #include "tablausuario.h"
 TablaUsuarios :: TablaUsuarios(){
-	punteroapuntero = new Usuario*[4];//totaltuplas
+	punteroapuntero = new Usuario*[4];//totaltuplas////////////////////////////////////////////////
 }
 
 void TablaUsuarios :: setPunteroapuntero(int posicion, Usuario* u){
@@ -19,4 +19,9 @@ Usuario* TablaUsuarios :: getPunteroapuntero(int posicion){
 
 int TablaUsuarios :: getTotaltuplas(){
 	return totaltuplas;
+}
+
+TablaUsuarios :: ~TablaUsuarios(){
+	delete[] punteroapuntero;
+	cout<<"TablaUsuarios"<<endl;
 }
