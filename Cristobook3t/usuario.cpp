@@ -83,6 +83,14 @@ int Normal::gettotalFotosUsuario(){
 Foto Normal::getFoto(int posicion){
 	return v_fotos[posicion];
 }
+Foto* Normal :: getV_fotos(){
+	return v_fotos;
+}
+
+void Normal :: eliminarv_Fotos(){
+	
+	delete[] v_fotos;
+}
 
 Usuario :: ~Usuario(){
 	this->login = "";

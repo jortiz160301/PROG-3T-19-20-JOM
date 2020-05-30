@@ -8,6 +8,10 @@ class Foto{
 		unsigned long int tamanio; // Se va a guardar en bytes
 	
 	public:
+		/**
+		 * @brief constructor 
+		 * @version
+		 */
 		Foto();
 		void setRuta(string ruta_in);
 		void setTipo(string tipo_in);

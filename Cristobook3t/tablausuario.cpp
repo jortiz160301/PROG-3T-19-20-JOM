@@ -2,8 +2,28 @@
 using namespace std;
 #include "tablausuario.h"
 TablaUsuarios :: TablaUsuarios(){
-	punteroapuntero = new Usuario*[4];//totaltuplas////////////////////////////////////////////////
+	
+	punteroapuntero = new Usuario*[getTotaltuplas()];
+	
 }
+
+
+
+
+TablaUsuarios :: TablaUsuarios(const TablaUsuarios* t){
+	punteroapuntero = new Usuario*[getTotaltuplas()];
+	this->totaltuplas = t->totaltuplas;
+	this->punteroapuntero = t->punteroapuntero;
+	for(int i=0;i<this->getTotaltuplas();i++){
+		
+		this->punteroapuntero[i] = t->punteroapuntero[i];
+	}
+	
+}
+
+
+
+
 
 void TablaUsuarios :: setPunteroapuntero(int posicion, Usuario* u){
 	punteroapuntero[posicion]=u;
@@ -22,6 +42,6 @@ int TablaUsuarios :: getTotaltuplas(){
 }
 
 TablaUsuarios :: ~TablaUsuarios(){
-	delete[] punteroapuntero;
-	cout<<"TablaUsuarios"<<endl;
+	//delete[] punteroapuntero;
+	cout<<"eliminando TablaUsuarios"<<endl;
 }

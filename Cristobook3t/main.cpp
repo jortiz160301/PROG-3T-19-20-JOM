@@ -5,10 +5,15 @@ using namespace std;
 int main(){
 	Vista v;
 	v.menu();
-	v.crearTablaUsuarios();
+	/*v.crearTablaUsuarios();
 	
 	
 	v. crearUsuario();
 	v.imprimirTabla();
-	v.eliminarTabla();
+	
+	v.instertarFotoUsuario();
+	v.ImprimirVectorFotos();
+	//v.buscarUsuario(true);
+	//v.eliminarTabla();
+	v.imprimirTabla();*/
 }
