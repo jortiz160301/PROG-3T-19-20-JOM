@@ -181,8 +181,8 @@ void Vista :: crearTablaUsuarios(){
 	Juan->setApellido("Perez");
 	Juan->setLogin("Juan123");
 	Juan->setperfil_usuario("Biografía de Juan");
-	Juan->setdimFotos(10);
-	Juan->settotalFotosUsuario(0);
+	Juan->setdimFotos(0);
+//	Juan->settotalFotosUsuario(0);
 	this->t->setPunteroapuntero(0,Juan);
 	
 
@@ -193,8 +193,8 @@ void Vista :: crearTablaUsuarios(){
 	Antonio->setApellido("García");
 	Antonio->setLogin("Antonio123");
 	Antonio->setperfil_usuario("Biografía de Antonio");
-	Antonio->setdimFotos(10);
-	Antonio->settotalFotosUsuario(0);
+	Antonio->setdimFotos(0);
+//	Antonio->settotalFotosUsuario(0);
 	this->t->setPunteroapuntero(1,Antonio);
 	
 	//cout<<this->t->getPunteroapuntero(0)->getNombre()<<endl;
@@ -329,14 +329,53 @@ void Vista :: instertarFotoUsuario(){
 	//(t->getPunteroapuntero(buscarUsuario(false)))->setFoto(gettotalFotosUsuario()-1),crearFoto() ) ;
 	/*Normal* n = */
 	
-	int posicion_usu = (buscarUsuario(false));
+	int posicion_usu = buscarUsuario(false);
 	Foto fnueva=crearFoto();
 	int posicion_fot;
 	
-	Normal* nuevoNor = new Normal(dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu)));
+//	Normal* nuevoNor = new Normal(dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu)));
+
+/*Cómo usar el dynamic cast para utilizar un normal como Normal y n o como Usuario?????*/
+	if(Normal *n = dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))) {
+		//resize vector fotos
+		cout<<"HHHHHHHHHHHHHHHHHHHHH"<<endl;
+		cout<<n->getdimFotos()<<endl;
+		n->resizevFotos(n->getV_fotos());
+		n->setFoto(0, fnueva);
+		
+		cout<<n->getdimFotos()<<endl;
+		//cambiar el vector con un vector cin la fot añadida
+		//deletear el vector antiguo
+	}
 	
-	nuevoNor->settotalFotosUsuario(nuevoNor->gettotalFotosUsuario()+1);
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//nuevoNor->settotalFotosUsuario(nuevoNor->gettotalFotosUsuario()+1);
+	/*
 	if(nuevoNor->getdimFotos() <=  nuevoNor->gettotalFotosUsuario()){
 		nuevoNor->setdimFotos(nuevoNor->gettotalFotosUsuario()+2);
 		Foto* nuevo_v_foto =  new Foto[nuevoNor->getdimFotos()];
@@ -348,24 +387,15 @@ void Vista :: instertarFotoUsuario(){
 	posicion_fot = nuevoNor->gettotalFotosUsuario();
 	cout<<"Dynamic cast hecho"<<endl;
 	nuevoNor->setFoto(posicion_fot, fnueva);
-	/*cout<<"OBTENIENDO RUTA DESDE insertar: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))-> getNombre()<<endl;*/
+	/*cout<<"OBTENIENDO RUTA DESDE insertar: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))-> getNombre()<<endl;
 	t->getPunteroapuntero(posicion_usu)->~Usuario();
 	
 	t->setPunteroapuntero(posicion_usu, nuevoNor);
-	
-	//ImprimirFoto(Foto f)
+	*/
+	//ImprimirFoto(Foto f)*/
 }
 
-/**
- * @brief método que imprime una foto
- * @version
- */
-void Vista :: ImprimirFoto(Foto f){
-	cout<<"IMPRIMIENDO foto"<<endl;
-	cout<<"Ruta: "<<f.getRuta()<<endl;
-	cout<<"Tipo: "<<f.getTipo()<<endl;
-	cout<<"Tamaño: "<<f.getTamanio()<<endl;
-}
+
 /**
  * @brief método que imprime un vector de fotos
  * @version
@@ -375,17 +405,20 @@ void Vista :: ImprimirVectorFotos(){
 	cout<<"IMPRIMIENDO"<<endl;
 
 	for(int i= 0; i<t->getTotaltuplas(); i++){
+		cout<<t->getPunteroapuntero(i)->getNombre()<<endl;
+		
+		
+	//	cout<<"Total fotos: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(i))->gettotalFotosUsuario()<<endl;
 	
-	cout<<"Bucle 1"<<endl;
-		cout<<"Total fotos: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(i))->gettotalFotosUsuario()<<endl;
-	
-	
-		for(int j= 0; j <( dynamic_cast<Normal*>(t->getPunteroapuntero(i)))->gettotalFotosUsuario(); j++){
-			cout<<"Bucle 2"<<endl;
-			cout<<"j ="<<j<<endl;
-			//cout<<"RUTA: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(i) )->getFoto(j).getRuta()<<endl;
-			Normal* nuevoNor = new Normal(dynamic_cast<Normal*>(t->getPunteroapuntero(j)));
-			ImprimirFoto(nuevoNor->getFoto(j));
+		if(Normal* n = dynamic_cast<Normal*>(t->getPunteroapuntero(i)  )) {
+			for(int j= 0; j < n->getdimFotos(); j++){
+				cout<<"Bucle 2"<<endl;
+				cout<<"j ="<<j<<endl;
+				//cout<<"RUTA: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(i) )->getFoto(j).getRuta()<<endl;
+				//Normal* nuevoNor = new Normal(dynamic_cast<Normal*>(t->getPunteroapuntero(j)));
+			
+					n->ImprimirFoto(n->getFoto(j));
+			}
 		}
 	}
 	

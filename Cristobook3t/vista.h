@@ -25,7 +25,6 @@ class Vista{
 	void resize(TablaUsuarios* t);
 	int buscarUsuario(bool imprimir);
 	Foto crearFoto();
-	void ImprimirFoto(Foto f);
 	void ImprimirVectorFotos();
 	void instertarFotoUsuario();
 	TablaUsuarios* insertarUsuario(Usuario* u);

@@ -45,10 +45,10 @@ void Usuario::setperfil_usuario(string perfil_usuario_in){
 void Normal::setdimFotos(int dim_vfotos_in){
 	this->dim_vfotos = dim_vfotos_in;
 }
-
+/*
 void Normal::settotalFotosUsuario(int totalFotosUsuario_in){
 	this->totalFotosUsuario = totalFotosUsuario_in;
-}
+}*/
 
 void Normal::setFoto(int posicion, Foto f_in){
 	v_fotos[posicion] = f_in;
@@ -75,10 +75,10 @@ string Usuario::getperfil_usuario(){
 int Normal::getdimFotos(){
 	return dim_vfotos;
 };
-
+/*
 int Normal::gettotalFotosUsuario(){
 	return totalFotosUsuario;
-}
+}*/
 
 Foto Normal::getFoto(int posicion){
 	return v_fotos[posicion];
@@ -90,6 +90,26 @@ Foto* Normal :: getV_fotos(){
 void Normal :: eliminarv_Fotos(){
 	
 	delete[] v_fotos;
+}
+
+
+void Normal :: resizevFotos(Foto* v_fotos_in){
+	int total = getdimFotos();
+	
+	setdimFotos(total +1);
+	eliminarv_Fotos();
+	v_fotos = new Foto[dim_vfotos];
+	
+}
+/**
+ * @brief método que imprime una foto
+ * @version
+ */
+void Normal :: ImprimirFoto(Foto f){
+	cout<<"IMPRIMIENDO foto"<<endl;
+	cout<<"Ruta: "<<f.getRuta()<<endl;
+	cout<<"Tipo: "<<f.getTipo()<<endl;
+	cout<<"Tamaño: "<<f.getTamanio()<<endl;
 }
 
 Usuario :: ~Usuario(){

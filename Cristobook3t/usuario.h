@@ -44,21 +44,25 @@ class Admin : public Usuario{
 	
 };
 
+
+
+
 class Normal : public Usuario{
 
     
 	protected: 
 	Foto* v_fotos; 
-	int totalFotosUsuario; //utiles del vector
+	//int totalFotosUsuario; //utiles del vector
 	double saldo;
 	int dim_vfotos; //Dimension del vector
+	
 	
 	public:    
 		
 		Normal() : Usuario(){
 			
-			totalFotosUsuario=0;
-			dim_vfotos = 4;
+		//	totalFotosUsuario=0;
+			dim_vfotos = 0;
 			saldo=0.0;
 			dim_vfotos=0;
 			this->v_fotos = new Foto[dim_vfotos];
@@ -74,11 +78,11 @@ class Normal : public Usuario{
 			this->apellido = n->apellido;
 			this->perfil_usuario = n->perfil_usuario;
 			
-			totalFotosUsuario=0;
+		//	totalFotosUsuario=0;
 			saldo=0.0;
 			dim_vfotos=0;
 			cout<<"Constructor por copia empezando"<<endl;
-			this->v_fotos = new Foto[10];
+			this->v_fotos = new Foto[dim_vfotos];
 			cout<<"V_fotos copiado"<<endl;
 			//this->v_fotos = n->v_fotos;
 			cout<<"direccion V_fotos copiado"<<endl;
@@ -89,22 +93,23 @@ class Normal : public Usuario{
 			cout<<"Demás variables copiando"<<endl;
 			
 			
-			this->totalFotosUsuario = n->totalFotosUsuario;
+		//	this->totalFotosUsuario = n->totalFotosUsuario;
 			this->saldo = n->saldo;
 			this->dim_vfotos = n->dim_vfotos;
-			for(int i = 0; i<totalFotosUsuario; i++){
+			for(int i = 0; i<dim_vfotos; i++){
 				v_fotos[i] = n->v_fotos[i];
 			}
 			
 			
 			cout<<"saliendo del constructor"<<endl;
 		};
-		
+		void ImprimirFoto(Foto f);
 		void setdimFotos(int dim_vfotos_in);
-		void settotalFotosUsuario(int totalFotosUsuario_in);
+	//	void settotalFotosUsuario(int totalFotosUsuario_in);
 		void setFoto(int posicion, Foto f_in);
 		int getdimFotos();
-		int gettotalFotosUsuario();
+		void resizevFotos(Foto* v_fotos_in);
+		//int gettotalFotosUsuario();
 		Foto getFoto(int posicion);
 		Foto* getV_fotos();
 		void eliminarv_Fotos();
