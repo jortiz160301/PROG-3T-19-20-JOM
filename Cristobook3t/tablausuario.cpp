@@ -41,6 +41,10 @@ int TablaUsuarios :: getTotaltuplas(){
 	return totaltuplas;
 }
 
+Usuario** TablaUsuarios :: getVectorPunteroapuntero(){
+	return punteroapuntero;
+}
+
 TablaUsuarios :: ~TablaUsuarios(){
 	//delete[] punteroapuntero;
 	cout<<"eliminando TablaUsuarios"<<endl;

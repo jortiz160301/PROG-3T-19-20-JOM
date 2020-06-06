@@ -24,6 +24,7 @@ class Vista{
 	void FiltrarLetras(int &num);
 	void resize(TablaUsuarios* t);
 	int buscarUsuario(bool imprimir);
+	void eliminarUsuario();
 	Foto crearFoto();
 	void ImprimirVectorFotos();
 	void instertarFotoUsuario();

@@ -28,3 +28,5 @@ string Foto :: getTipo(){
 unsigned long int Foto :: getTamanio(){
 	return tamanio;
 }
+
+

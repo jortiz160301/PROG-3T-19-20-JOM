@@ -222,10 +222,11 @@ void Vista :: menu (){
 		cout<<"2: Crear la tabla de usuarios."<<endl;
 		cout<<"3: Crear un nuevo usuario."<<endl;
 		cout<<"4: Imprimir la tabla."<<endl;		
-		cout<<"5: Buscar un usuario."<<endl;	
-		cout<<"6: Crear foto a un usuario"<<endl;
-		cout<<"7: Imprimir la foto de un usuario"<<endl;
-		cout<<"8: Salir."<<endl;
+		cout<<"5: Eliminar usuario."<<endl;
+		cout<<"6: Insertar foto a un usuario."<<endl;	
+		cout<<"7: Buscar un usuario"<<endl;
+		cout<<"8: Imprimir la foto de un usuario"<<endl;
+		cout<<"9: Salir."<<endl;
 		
 		
 		FiltrarLetras(opcion);
@@ -239,12 +240,14 @@ void Vista :: menu (){
 		}else if(opcion ==4){
 			imprimirTabla();
 		}else if(opcion ==5){
-			instertarFotoUsuario();
+			eliminarUsuario();
 		}else if(opcion ==6){
-			buscarUsuario(true);
+			instertarFotoUsuario();
 		}else if(opcion ==7){
-			ImprimirVectorFotos();
+			buscarUsuario(true);
 		}else if(opcion ==8){
+			ImprimirVectorFotos();
+		}else if(opcion ==9){
 		 	eliminarTabla();
 		 	menu=false;
 		}
@@ -298,6 +301,50 @@ int Vista :: buscarUsuario(bool imprimir){
 		return pos_enc;
 	}
 }
+/*if(Normal *n = dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))) {//para eliminarlo si es Admin o Normal
+				n->~Normal();
+				cout<<3<<endl;
+			}else{
+				Admin *a = dynamic_cast<Admin*>(t->getPunteroapuntero(posicion_usu));
+				a->~Admin();
+				
+			}*/
+
+void Vista :: eliminarUsuario(){		//t->getPunteroapuntero(posicion_usu)->
+	int posicion_usu = buscarUsuario(false);
+	
+	int tuplas_nuevo = t->getTotaltuplas()-1;
+	int j=0;
+	bool encontrado = false;
+	//t->setTotaltuplas(t->getTotaltuplas()-1);
+	Usuario** punteroapuntero_nuevo = new Usuario*[tuplas_nuevo];
+
+	for(int i = posicion_usu; i<(t->getTotaltuplas()-1); i++){
+		/*if(t->getPunteroapuntero(posicion_usu) =! t->getPunteroapuntero(i)){
+			//punteroapuntero_nuevo[j]=getPunteroapuntero(i);//
+			t->setPunteroapuntero(i,t->getPunteroapuntero(i+1));
+		
+			//encontrado = true;
+		}else{
+		}*/
+		cout<<1<<endl;
+		t->setPunteroapuntero(i,t->getPunteroapuntero(i+1));//pap(i) = pap(i+1) tantas veces como la dimensión del vector-1
+		cout<<2<<endl;
+	}
+	delete t->getPunteroapuntero(t->getTotaltuplas()-1);
+	t->setTotaltuplas(t->getTotaltuplas()-1);
+	
+	for(int i= 0; i<t->getTotaltuplas();i++){
+		cout<<t->getPunteroapuntero(i)->getNombre()<<endl;
+	}
+	
+}
+	
+
+
+
+
+
 /**
  * @brief método que crea una foto
  * @version
@@ -325,74 +372,20 @@ void Normal::setFoto(int posicion, Foto f_in){
  * @version
  */
 void Vista :: instertarFotoUsuario(){
+	
 	cout<<"Elija al usuario al que quiere introducir la foto: "<<endl;
-	//(t->getPunteroapuntero(buscarUsuario(false)))->setFoto(gettotalFotosUsuario()-1),crearFoto() ) ;
-	/*Normal* n = */
-	
 	int posicion_usu = buscarUsuario(false);
-	Foto fnueva=crearFoto();
-	int posicion_fot;
-	
-//	Normal* nuevoNor = new Normal(dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu)));
 
-/*Cómo usar el dynamic cast para utilizar un normal como Normal y n o como Usuario?????*/
 	if(Normal *n = dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))) {
-		//resize vector fotos
-		cout<<"HHHHHHHHHHHHHHHHHHHHH"<<endl;
-		cout<<n->getdimFotos()<<endl;
-		n->resizevFotos(n->getV_fotos());
-		n->setFoto(0, fnueva);
 		
-		cout<<n->getdimFotos()<<endl;
-		//cambiar el vector con un vector cin la fot añadida
-		//deletear el vector antiguo
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//nuevoNor->settotalFotosUsuario(nuevoNor->gettotalFotosUsuario()+1);
-	/*
-	if(nuevoNor->getdimFotos() <=  nuevoNor->gettotalFotosUsuario()){
-		nuevoNor->setdimFotos(nuevoNor->gettotalFotosUsuario()+2);
-		Foto* nuevo_v_foto =  new Foto[nuevoNor->getdimFotos()];
-		nuevo_v_foto = nuevoNor->getV_fotos();
-		//delete[] nuevoNor->v_fotos;
-		nuevoNor->eliminarv_Fotos();
-	}
-	
-	posicion_fot = nuevoNor->gettotalFotosUsuario();
-	cout<<"Dynamic cast hecho"<<endl;
-	nuevoNor->setFoto(posicion_fot, fnueva);
-	/*cout<<"OBTENIENDO RUTA DESDE insertar: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))-> getNombre()<<endl;
-	t->getPunteroapuntero(posicion_usu)->~Usuario();
-	
-	t->setPunteroapuntero(posicion_usu, nuevoNor);
-	*/
-	//ImprimirFoto(Foto f)*/
+		Foto fnueva=crearFoto();
+		n->resizevFotos(n->getV_fotos());//se amuenta la dimensión del vector por 1
+		n->setFoto(n->getdimFotos()-1, fnueva);//se añade la foto nueva a la ultima posición del vector  
+		
+		
+	}else{
+		cout<<"Ese usuario no puede tener fotos."<<endl;
+	}	
 }
 
 
@@ -405,24 +398,21 @@ void Vista :: ImprimirVectorFotos(){
 	cout<<"IMPRIMIENDO"<<endl;
 
 	for(int i= 0; i<t->getTotaltuplas(); i++){
-		cout<<t->getPunteroapuntero(i)->getNombre()<<endl;
 		
-		
-	//	cout<<"Total fotos: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(i))->gettotalFotosUsuario()<<endl;
-	
-		if(Normal* n = dynamic_cast<Normal*>(t->getPunteroapuntero(i)  )) {
-			for(int j= 0; j < n->getdimFotos(); j++){
-				cout<<"Bucle 2"<<endl;
-				cout<<"j ="<<j<<endl;
-				//cout<<"RUTA: "<<dynamic_cast<Normal*>(t->getPunteroapuntero(i) )->getFoto(j).getRuta()<<endl;
-				//Normal* nuevoNor = new Normal(dynamic_cast<Normal*>(t->getPunteroapuntero(j)));
-			
+		if(Normal* n = dynamic_cast<Normal*>(t->getPunteroapuntero(i)) ) {
+			if(n->getdimFotos() >= 1){//no he podido juntar las dos condiciones
+				cout<<t->getPunteroapuntero(i)->getNombre()<<":"<<endl;
+				for(int j= 0; j < n->getdimFotos(); j++){
+					cout<<"Bucle 2"<<endl;
+					cout<<"j ="<<j<<endl;
 					n->ImprimirFoto(n->getFoto(j));
+				}
+				cout<<endl;
+			}else{
+				cout<<"Este usuario no tiene fotos."<<endl;
 			}
 		}
 	}
-	
-		
 }
 
 void Vista :: eliminarTabla(){

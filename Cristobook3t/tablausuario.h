@@ -1,5 +1,4 @@
 #include <iostream>
-using name#include <iostream>
 using namespace std;
 #include "usuario.h"
 class TablaUsuarios{
@@ -21,16 +20,8 @@ class TablaUsuarios{
 		
 		void setPunteroapuntero(int posicion, Usuario* u);
 		void setTotaltuplas(int totaltuplas_in);
+		Usuario** getVectorPunteroapuntero();
 		
-		Usuario* getPunteroapuntero(int posicion);
-		int getTotaltuplas();
-		/**
-		 * @brief destructor de tablausuario
-		 * @version
-		 */
-		~TablaUsuarios();
-};
-
 		Usuario* getPunteroapuntero(int posicion);
 		int getTotaltuplas();
 		/**
