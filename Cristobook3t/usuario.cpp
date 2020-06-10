@@ -40,6 +40,23 @@ void Usuario::setApellido(string apellido_in){
 void Usuario::setperfil_usuario(string perfil_usuario_in){
 	this->perfil_usuario = perfil_usuario_in;
 }
+/*
+Usuario* Usuario::operator=(const Usuario* u){//hacerlo virtual? si. esto está mal
+	if(u != this){
+		if(Normal *n = dynamic_cast<Normal*>(u))) {
+			delete[] this->v_fotos;
+			this->saldo = u->saldo;
+			this->dim_vfotos = u->dim_vfotos;
+			this->v_fotos = new Foto[this->dim_vfotos];
+			for(int i = 0; i <dim_vfotos; i++){
+				this->v_fotos[i]= u->v_fotos[i];
+			}
+		}else if(Admin *n = dynamic_cast<Admin*>(u))){
+			
+		}
+		
+	return this;
+}*/
 
 
 void Normal::setdimFotos(int dim_vfotos_in){
@@ -92,14 +109,46 @@ void Normal :: eliminarv_Fotos(){
 	delete[] v_fotos;
 }
 
-
-void Normal :: resizevFotos(Foto* v_fotos_in){
-	int total = getdimFotos();
+/*
+void TablaUsuarios :: resizePP(int tamanio){	
+	cout<<"resize"<<endl;
+	Usuario** nuevo = new Usuario*[tamanio];
 	
-	setdimFotos(total +1);
-	eliminarv_Fotos();
-	v_fotos = new Foto[dim_vfotos];
+	if(tamanio > getTotaltuplas()){//si pedimos más tamaño del que tiene: 
+		
+		for(int i = 0; i < getTotaltuplas(); i++){
+			nuevo[i] = getPunteroapuntero(i);
+		}
+		
+	}else if(tamanio < getTotaltuplas()){// si pedimos menos tamaño del que tiene
+		
+		for(int i = 0; i < tamanio; i++){
+			nuevo[i] = getPunteroapuntero(i);
+		}
+	}
+	delete [] punteroapuntero;
+	setVectorPunteroapuntero(nuevo);
 	
+}
+*/
+void Normal :: resizevFotos(int tamanio){
+	cout<<"Resize fotos haciednose"<<endl;
+	Foto* nueva = new Foto[tamanio];
+	if(tamanio > getdimFotos()){
+		for(int i = 0; i < getdimFotos(); i++){
+			nueva[i] = getFoto(i);
+		}
+	}else if(tamanio < getdimFotos()){
+		
+		for(int i = 0; i < tamanio; i++){
+			nueva[i] = getFoto(i);
+		}
+	}
+	delete[] v_fotos;
+	v_fotos = nueva;
+	//setdimFotos(total +1);
+	//v_fotos = new Foto[dim_vfotos];
+	cout<<"Resize fotos hecho"<<endl;
 }
 /**
  * @brief método que imprime una foto
@@ -112,19 +161,52 @@ void Normal :: ImprimirFoto(Foto f){
 	cout<<"Tamaño: "<<f.getTamanio()<<endl;
 }
 
+int Normal :: buscarFoto(string ruta_buscada){
+	
+	bool encontrado = false;
+	int pos_enc = 0;
+	
+	do{
+	
+		for(int i = 0; i<this->getdimFotos() && (encontrado == false); i++){	
+		
+			if(this->getFoto(i).getRuta() == ruta_buscada){
+				encontrado = true;
+				pos_enc = i;
+			}
+		}
+
+		if(encontrado == false && this->getdimFotos()!=0){
+			cout<<"Foto no encontrada. Escriba la ruta de nuevo."<<endl;
+		}else if(this->getdimFotos()==0){
+			cout<<"El usuario no tiene fotos."<<endl;
+			encontrado = true; //para salir del bucle
+			pos_enc = -1;//en eliminarFoto hay una condición para que si pos = -1, se muestre mensaje de error
+		}
+		
+	}while(encontrado == false);
+	
+	return pos_enc;
+}
+
+
+
 Usuario :: ~Usuario(){
 	this->login = "";
 	this->nombre = "";
 	this->apellido = "";
 	this->perfil_usuario = "";
-	cout<<"Usuario"<<endl;
+	cout<<"Destructor Usuario"<<endl;
 }
 
 Normal :: ~Normal(){
 	delete[] this->v_fotos;
-	cout<<"Normal"<<endl;
+	
+	cout<<"Destructor Normal"<<endl;
 }
 
 Admin :: ~Admin(){
-	cout<<"Admin"<<endl;
+	cout<<"Destructor Admin"<<endl;
 }
+
+

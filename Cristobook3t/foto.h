@@ -24,6 +24,8 @@ class Foto{
 			this->ruta = "";
 			this->tipo = "";
 			this->tamanio = 0;
+			cout<<"Foto"<<endl;
 		}
+		//Foto* operator=(const Foto* f);
 		
 };

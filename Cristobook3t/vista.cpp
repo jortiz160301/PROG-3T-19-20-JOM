@@ -74,39 +74,7 @@ void Vista :: testing(){
 	imprimirTabla();
 }
 
-/**
- * @brief método de ten el que se inserta un usuario en la tabla de usuarios
- * @version
- */
-TablaUsuarios* Vista :: insertarUsuario(Usuario* u){
-	//TablaUsuarios* nueva = new TablaUsuarios;
-	/*if(debug == true){
-	cout<<"Totaltuplas: "<<t->getTotaltuplas()<<endl;
-	}*/
-	
-	t->setTotaltuplas(t->getTotaltuplas()+1);
-	/*if(debug == true){
-	cout<<"Totaltuplas: "<<t->getTotaltuplas()<<endl;
-	}*/
 
-	TablaUsuarios* nueva = new TablaUsuarios(t);
-	/*if(debug == true){
-	cout<<"Creada nueva tabla "<<endl;
-	}*/
-	
-	
-	/*if(debug == true){
-	cout<<"Total tuplas de la nueva tabla" << nueva->getTotaltuplas()<<endl;
-	}*/
-	
-	nueva->setPunteroapuntero((nueva->getTotaltuplas())-1,u);
-	//cout<<(nueva->getPunteroapuntero(0))->getNombre()<<endl;
-	
-
-	return nueva;
-
-
-}
 /**
  * @brief método de creación de usuarios, aquí se hace los sets según se tenga un usuario normal o admin
  * @version
@@ -123,7 +91,7 @@ void Vista :: crearUsuario(){
 	cout<<"1: Admin"<<endl;
 	cout<<"2: Normal"<<endl;
 	cin>>opcion;
-	
+	//PIDO LOS DATOS EN CLASE VISTA
 	cout<<"Introduzca el nombre del usuario: "<<endl;
 	cin>>nombre_us;
 	
@@ -136,6 +104,8 @@ void Vista :: crearUsuario(){
 	cout<<"Introduzca el perfil del usuario: "<<endl;
 	cin>>perfil_us;
 	
+	//HAGO LOS SETS
+	
 	if(opcion == 1){
 		Admin* nuevoAdm = new Admin;
 		
@@ -145,12 +115,10 @@ void Vista :: crearUsuario(){
 		nuevoAdm->setApellido(apellido_us);
 		nuevoAdm->setLogin(login_us);
 		nuevoAdm->setperfil_usuario(perfil_us);
-		//cout<<(t->getPunteroapuntero(0))->getNombre()<<endl;
-		t=insertarUsuario(nuevoAdm);
-		//cout<<(t->getPunteroapuntero(0))->getNombre()<<endl;
 		
-			
-	
+		t->insertarUsuario(nuevoAdm);
+		
+
 	}
 	else if(opcion == 2){
 		Normal* nuevoNor= new Normal;
@@ -161,7 +129,7 @@ void Vista :: crearUsuario(){
 		nuevoNor->setLogin(login_us);
 		nuevoNor->setperfil_usuario(perfil_us);
 		
-		t=insertarUsuario(nuevoNor);
+		t->insertarUsuario(nuevoNor);
 		
 		
 	}
@@ -226,7 +194,9 @@ void Vista :: menu (){
 		cout<<"6: Insertar foto a un usuario."<<endl;	
 		cout<<"7: Buscar un usuario"<<endl;
 		cout<<"8: Imprimir la foto de un usuario"<<endl;
-		cout<<"9: Salir."<<endl;
+		cout<<"9: Eliminar foto de un usuario"<<endl;
+		cout<<"10: Ordenar usuarios"<<endl;
+		cout<<"10: Salir."<<endl;
 		
 		
 		FiltrarLetras(opcion);
@@ -240,14 +210,18 @@ void Vista :: menu (){
 		}else if(opcion ==4){
 			imprimirTabla();
 		}else if(opcion ==5){
-			eliminarUsuario();
+			eliminarUsuarioVista();
 		}else if(opcion ==6){
-			instertarFotoUsuario();
+			insertarFotoUsuarioVista();
 		}else if(opcion ==7){
 			buscarUsuario(true);
 		}else if(opcion ==8){
 			ImprimirVectorFotos();
 		}else if(opcion ==9){
+			eliminarFotoUsuarioVista();
+		}else if(opcion ==10){
+			ordenarUsuariosVista();
+		}else if(opcion ==11){
 		 	eliminarTabla();
 		 	menu=false;
 		}
@@ -266,7 +240,7 @@ int Vista :: buscarUsuario(bool imprimir){
 	bool encontrado = false;
 	string login_buscado;
 	int pos_enc = 0;
-	char crearnuevo;
+	
 	
 	do{
 		cout<<"Seleccione un usuario por su login: "<<endl;
@@ -301,47 +275,34 @@ int Vista :: buscarUsuario(bool imprimir){
 		return pos_enc;
 	}
 }
-/*if(Normal *n = dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))) {//para eliminarlo si es Admin o Normal
-				n->~Normal();
-				cout<<3<<endl;
-			}else{
-				Admin *a = dynamic_cast<Admin*>(t->getPunteroapuntero(posicion_usu));
-				a->~Admin();
-				
-			}*/
 
-void Vista :: eliminarUsuario(){		//t->getPunteroapuntero(posicion_usu)->
-	int posicion_usu = buscarUsuario(false);
 	
-	int tuplas_nuevo = t->getTotaltuplas()-1;
-	int j=0;
-	bool encontrado = false;
-	//t->setTotaltuplas(t->getTotaltuplas()-1);
-	Usuario** punteroapuntero_nuevo = new Usuario*[tuplas_nuevo];
 
-	for(int i = posicion_usu; i<(t->getTotaltuplas()-1); i++){
-		/*if(t->getPunteroapuntero(posicion_usu) =! t->getPunteroapuntero(i)){
-			//punteroapuntero_nuevo[j]=getPunteroapuntero(i);//
-			t->setPunteroapuntero(i,t->getPunteroapuntero(i+1));
-		
-			//encontrado = true;
-		}else{
-		}*/
-		cout<<1<<endl;
-		t->setPunteroapuntero(i,t->getPunteroapuntero(i+1));//pap(i) = pap(i+1) tantas veces como la dimensión del vector-1
-		cout<<2<<endl;
-	}
-	delete t->getPunteroapuntero(t->getTotaltuplas()-1);
-	t->setTotaltuplas(t->getTotaltuplas()-1);
+
+void Vista :: eliminarUsuarioVista(){		//t->getPunteroapuntero(posicion_usu)->
+	cout<<"¿Qué usuario queire eliminar?"<<endl;
+	int posicion_usu = buscarUsuario(false);//obtengo la posición del usuario que busco
+	t->eliminarUsuario(posicion_usu);
 	
-	for(int i= 0; i<t->getTotaltuplas();i++){
-		cout<<t->getPunteroapuntero(i)->getNombre()<<endl;
-	}
 	
 }
+int Vista :: buscarFotoVista(int pos_usu){	
 	
+	int pos_foto = 0;
+	string ruta_buscada;
+	if(Normal* n = dynamic_cast<Normal*>(t->getPunteroapuntero(pos_usu))){
+	
+		cout<<"Introduzca la ruta de la foto a eliminar. "<<endl;
+		cin>>ruta_buscada;
+		pos_foto = n->buscarFoto(ruta_buscada);
+	
+	}else{
+		cout<<"Ese usuario no puede tener fotos."<<endl;
+		pos_foto = -1;
+	}
+	return pos_foto;
 
-
+}
 
 
 
@@ -354,9 +315,13 @@ Foto Vista :: crearFoto(){
 	string ruta_in;
 	string tipo_in; 
 	unsigned long int tamanio_in; 
+	
+	//PIDO DATOS
 	cout<<"Introduzca la ruta de la foto: "; cin>>ruta_in;
 	cout<<"Introduzca el tipo de la foto: ";cin>>tipo_in; 
 	cout<<"Introduzca el tamaño de la foto: ";cin>>tamanio_in; 
+	
+	//HAGO SETS
 	nueva.setRuta(ruta_in);
 	nueva.setTipo(tipo_in);
 	nueva.setTamanio(tamanio_in);
@@ -371,7 +336,7 @@ void Normal::setFoto(int posicion, Foto f_in){
  * @brief método que inserta una foto en el vector de fotos de usuario
  * @version
  */
-void Vista :: instertarFotoUsuario(){
+void Vista :: insertarFotoUsuarioVista(){
 	
 	cout<<"Elija al usuario al que quiere introducir la foto: "<<endl;
 	int posicion_usu = buscarUsuario(false);
@@ -379,16 +344,23 @@ void Vista :: instertarFotoUsuario(){
 	if(Normal *n = dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))) {
 		
 		Foto fnueva=crearFoto();
-		n->resizevFotos(n->getV_fotos());//se amuenta la dimensión del vector por 1
-		n->setFoto(n->getdimFotos()-1, fnueva);//se añade la foto nueva a la ultima posición del vector  
-		
+		t->insertarFotoUsuario(posicion_usu, fnueva, n);
+		cout<<"foto insertada"<<endl;
 		
 	}else{
 		cout<<"Ese usuario no puede tener fotos."<<endl;
 	}	
 }
 
-
+void Vista :: eliminarFotoUsuarioVista(){
+	cout<<"Elija al usuario al que quiere eliminar la foto: "<<endl;
+	int posicion_usu = buscarUsuario(false);
+	int posicion_foto = buscarFotoVista(posicion_usu);
+	
+	if(posicion_foto >= 0){ 
+		t->eliminarFotoUsuario(posicion_usu,posicion_foto);
+	}
+}
 /**
  * @brief método que imprime un vector de fotos
  * @version
@@ -398,13 +370,13 @@ void Vista :: ImprimirVectorFotos(){
 	cout<<"IMPRIMIENDO"<<endl;
 
 	for(int i= 0; i<t->getTotaltuplas(); i++){
-		
+
 		if(Normal* n = dynamic_cast<Normal*>(t->getPunteroapuntero(i)) ) {
+			
+			cout<<t->getPunteroapuntero(i)->getNombre()<<":"<<endl;
 			if(n->getdimFotos() >= 1){//no he podido juntar las dos condiciones
-				cout<<t->getPunteroapuntero(i)->getNombre()<<":"<<endl;
+				
 				for(int j= 0; j < n->getdimFotos(); j++){
-					cout<<"Bucle 2"<<endl;
-					cout<<"j ="<<j<<endl;
 					n->ImprimirFoto(n->getFoto(j));
 				}
 				cout<<endl;
@@ -424,9 +396,8 @@ void Vista :: eliminarTabla(){
  * @version
  */
 void Vista :: imprimirUsuario(Usuario* u){
-	cout<<9<<endl;
+	
 	cout<<"Nombre: "<<u->getNombre()<<endl;
-	cout<<10<<endl;
 	cout<<"Apellido: "<<u->getApellido()<<endl;
 	cout<<"Login: "<<u->getLogin()<<endl;
 	cout<<"Perfil: "<<u->getperfil_usuario()<<endl;
@@ -446,7 +417,24 @@ void Vista :: imprimirTabla(){
 	}
 }
 
-
+void Vista :: ordenarUsuariosVista(){
+	int opcion =0;
+	cout<<"1: Ordenar por número de fotos"<<endl;
+	cout<<"2: Ordenar por login"<<endl;
+	do{
+		cin>>opcion;
+		if(opcion != 1 && opcion != 2 ){
+			cout<<"Por favor, introduzca una opción válida"<<endl;
+		}
+	}while(opcion != 1 && opcion != 2);
+	
+	t->ordenarUsuariosNumFot();
+/*	if(opcion == 1){
+		
+	}else if(opcion == 2){
+		//t->ordenarUsuariosLogin();
+	}*/
+}
 
 
 

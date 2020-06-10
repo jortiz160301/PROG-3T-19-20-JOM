@@ -29,4 +29,13 @@ unsigned long int Foto :: getTamanio(){
 	return tamanio;
 }
 
-
+/*
+Foto* Foto :: operator=(const Foto* f){
+	if(f != this){
+		this->ruta = f->ruta;
+		this->tipo = f->tipo;
+		this->tamanio = f->tamanio;
+	}
+	return this;
+}
+*/

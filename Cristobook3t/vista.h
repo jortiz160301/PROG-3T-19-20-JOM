@@ -24,13 +24,17 @@ class Vista{
 	void FiltrarLetras(int &num);
 	void resize(TablaUsuarios* t);
 	int buscarUsuario(bool imprimir);
-	void eliminarUsuario();
+	void resizePP(int tamanio);
+	void eliminarUsuarioVista();
+	void eliminarFotoUsuarioVista();
 	Foto crearFoto();
 	void ImprimirVectorFotos();
-	void instertarFotoUsuario();
-	TablaUsuarios* insertarUsuario(Usuario* u);
+	void insertarFotoUsuarioVista();
+	int buscarFotoVista(int pos_usu);
+//	void insertarUsuarioVista(Usuario* u);
 	Usuario* construirUsuario(Usuario* u);
 	void crearUsuario();
+	void ordenarUsuariosVista();
 	//void ordenar
 	//void testing();
 	//todos los cin

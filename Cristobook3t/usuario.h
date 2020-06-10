@@ -108,7 +108,8 @@ class Normal : public Usuario{
 	//	void settotalFotosUsuario(int totalFotosUsuario_in);
 		void setFoto(int posicion, Foto f_in);
 		int getdimFotos();
-		void resizevFotos(Foto* v_fotos_in);
+		void resizevFotos(int tamanio);
+		int buscarFoto(const string ruta_buscada);
 		//int gettotalFotosUsuario();
 		Foto getFoto(int posicion);
 		Foto* getV_fotos();
