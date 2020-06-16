@@ -50,7 +50,13 @@ Usuario** TablaUsuarios :: getVectorPunteroapuntero(){
 }
 
 TablaUsuarios :: ~TablaUsuarios(){
-	//delete[] punteroapuntero;
+	
+	for(int i = 0; i<getTotaltuplas(); i++){	
+		delete punteroapuntero[i];
+	}
+	delete[] punteroapuntero;
+	
+	
 	cout<<"eliminando TablaUsuarios"<<endl;
 }
 
@@ -58,7 +64,58 @@ TablaUsuarios :: ~TablaUsuarios(){
 
 
 void TablaUsuarios :: resizePP(int tamanio){	
-	cout<<"resize"<<endl;
+	cout<<"resize"<<end#include <iostream>
+using namespace std;
+#include "tablausuario.h"
+TablaUsuarios :: TablaUsuarios(){
+	
+	punteroapuntero = new Usuario*[getTotaltuplas()];
+	
+}
+
+
+
+
+TablaUsuarios :: TablaUsuarios(const TablaUsuarios* t){
+	punteroapuntero = new Usuario*[getTotaltuplas()];
+	this->totaltuplas = t->totaltuplas;
+	this->punteroapuntero = t->punteroapuntero;
+	for(int i=0;i<this->getTotaltuplas();i++){
+		
+		this->punteroapuntero[i] = t->punteroapuntero[i];
+	}
+	
+}
+
+void TablaUsuarios :: setVectorPunteroapuntero(Usuario** nuevo){
+	this-> punteroapuntero = nuevo;
+}
+
+
+
+void TablaUsuarios :: setPunteroapuntero(int posicion, Usuario* u){
+	punteroapuntero[posicion]=u;
+}
+
+void TablaUsuarios :: setTotaltuplas(int totaltuplas_in){
+	totaltuplas = totaltuplas_in;
+}
+
+
+
+Usuario* TablaUsuarios :: getPunteroapuntero(int posicion){
+	return punteroapuntero[posicion];
+}
+
+int TablaUsuarios :: getTotaltuplas(){
+	return totaltuplas;
+}
+
+Usuario** TablaUsuarios :: getVectorPunteroapuntero(){
+	return punteroapuntero;
+}
+
+TablaUsuarios :: ~Tablal;
 	Usuario** nuevo = new Usuario*[tamanio];
 	
 	if(tamanio > getTotaltuplas()){//si pedimos más tamaño del que tiene: 
@@ -191,13 +248,87 @@ void TablaUsuarios :: ordenarUsuariosNumFot(){
 				
 						aux_n = n;
 						setPunteroapuntero(i,n_antes);//n = n_antes;
-						setPunteroapuntero(i-1,aux_n);
+						setPunteroapuntero(i-1,aux_n);//n_antes = aux_n;
 					}
 				}
 			}
 		}
 	}
 }
+
+void TablaUsuarios :: ordenarUsuariosLogin(){
+	bool cambio = true;
+	
+	for(int izda=0; izda < getTotaltuplas(); izda++){
+		cambio = false;
+		
+		for(int i=getTotaltuplas()-1; i>izda; i--){
+			if(getPunteroapuntero(i)->getLogin() < getPunteroapuntero(i-1)->getLogin()){
+				bool cambio = true;
+			
+				Usuario* aux = getPunteroapuntero(i);
+				setPunteroapuntero(i,getPunteroapuntero(i-1));//v[i] = v[i-1];
+				setPunteroapuntero(i-1,aux);//v[i-1]=aux;
+				
+				
+				/*if(Normal* n = dynamic_cast<Normal*>(getPunteroapuntero(i))){
+					aux_n = n;
+				}else if(Admin* n = dynamic_cast<Admin*>(getPunteroapuntero(i))){
+					aux_a = a;
+				}*/
+				//n = n_antes;
+				//setPunteroapuntero(i-1,aux_n);
+			}
+		}
+	}
+}
+
+
+
+void TablaUsuarios :: eliminarPorMin(int min){
+	for(int i = 0; i<getTotaltuplas();){
+		if(Normal *n = dynamic_cast<Normal*> (getPunteroapuntero(i) ) ) {
+			if(n->getdimFotos() < min){
+				
+				for(int j = i; j<getTotaltuplas()-1; j++){
+					punteroapuntero[j]=punteroapuntero[j+1];
+				}
+				resizePP(getTotaltuplas()-1);
+				setTotaltuplas(getTotaltuplas()-1);
+				
+			}else{
+				i++;
+			}
+		}else{
+			i++;
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

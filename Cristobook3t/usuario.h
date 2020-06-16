@@ -23,8 +23,13 @@ class Usuario{
 		string getNombre();
 		string getApellido();
 		string getperfil_usuario();
+		//Normal* operator=(Normal* u);
 		virtual ~Usuario();
+		
 };
+
+
+
 
 
 class Admin : public Usuario{
@@ -40,6 +45,8 @@ class Admin : public Usuario{
 		void setTotalConsultas();
 		int getTotalConsultas();
 		void buscarFotografias(string cadena);
+		Admin* operator=(Admin* a);
+		friend ostream& operator<<(ostream &flujo, const Admin *a);
 		~Admin();
 	
 };
@@ -103,6 +110,11 @@ class Normal : public Usuario{
 			
 			cout<<"saliendo del constructor"<<endl;
 		};
+		
+		
+		
+		
+		
 		void ImprimirFoto(Foto f);
 		void setdimFotos(int dim_vfotos_in);
 	//	void settotalFotosUsuario(int totalFotosUsuario_in);
@@ -114,7 +126,32 @@ class Normal : public Usuario{
 		Foto getFoto(int posicion);
 		Foto* getV_fotos();
 		void eliminarv_Fotos();
+		Normal operator=(Normal* u);
+		friend ostream& operator<<(ostream &flujo, Normal *n);
 		~Normal();
 		
 	
 };
+/*
+
+Usuario* Usuario::operator=(Usuario* u){
+			if(u!= this){
+				if(Normal* n = dynamic_cast<Normal*>(u)){
+					delete[] n->v_fotos;
+					this->dim_vfotos = n->dim_vfotos;
+					this->v_fotos = new Foto[n->dim_vfotos];
+					this->saldo = n->saldo;
+					for(int i = 0; i>this->dim_vfotos; i++){
+						this->v_fotos[i] = n->v_fotos[i];
+					}
+					
+				}else if(Admin* a = dynamic_cast<Admin*>(u)){
+						this->setTotalConsultas(a->getTotalConsultas());
+				}
+				this->setLogin(u->getLogin());
+				this->setNombre(u->getNombre());
+				this->setApellido(u->getApellido());
+				this->setperfil_usuario(u->getperfil_usuario());
+			}
+			return *this;
+}*/

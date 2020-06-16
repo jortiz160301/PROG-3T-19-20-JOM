@@ -57,6 +57,36 @@ Usuario* Usuario::operator=(const Usuario* u){//hacerlo virtual? si. esto está 
 		
 	return this;
 }*/
+Normal Normal::operator=(Normal* n){
+	if(n!= this){
+		delete[] n->v_fotos;
+		this->dim_vfotos = n->dim_vfotos;
+		this->v_fotos = new Foto[n->dim_vfotos];
+		this->saldo = n->saldo;
+		for(int i = 0; i>this->dim_vfotos; i++){
+			this->v_fotos[i] = n->v_fotos[i];
+		}
+		this->setLogin(n->getLogin());
+		this->setNombre(n->getNombre());
+		this->setApellido(n->getApellido());
+		this->setperfil_usuario(n->getperfil_usuario());
+	}
+	return *this;
+}
+
+
+
+
+Admin* Admin::operator=(Admin* a){
+	//this->setTotalConsultas(a->getTotalConsultas());
+	this->setLogin(a->getLogin());
+	this->setNombre(a->getNombre());
+	this->setApellido(a->getApellido());
+	this->setperfil_usuario(a->getperfil_usuario());
+
+	return this;
+}
+
 
 
 void Normal::setdimFotos(int dim_vfotos_in){
@@ -161,6 +191,30 @@ void Normal :: ImprimirFoto(Foto f){
 	cout<<"Tamaño: "<<f.getTamanio()<<endl;
 }
 
+
+
+ostream& operator<<(ostream &flujo, Normal *n){
+	
+	flujo<<"Nombre: "<<n->getNombre()<<endl;
+	flujo<<"Apellido: "<<n->getApellido()<<endl;
+	flujo<<"Login: "<<n->getLogin()<<endl;
+	flujo<<"Perfil: "<<n->getperfil_usuario()<<endl;
+	flujo<<endl;
+	
+	return flujo;
+}
+
+ostream& operator<<(ostream &flujo, Admin *a){
+	
+	flujo<<"Nombre: "<<a->getNombre()<<endl;
+	flujo<<"Apellido: "<<a->getApellido()<<endl;
+	flujo<<"Login: "<<a->getLogin()<<endl;
+	flujo<<"Perfil: "<<a->getperfil_usuario()<<endl;
+	flujo<<endl;
+	
+	return flujo;
+}
+
 int Normal :: buscarFoto(string ruta_buscada){
 	
 	bool encontrado = false;
@@ -201,11 +255,12 @@ Usuario :: ~Usuario(){
 
 Normal :: ~Normal(){
 	delete[] this->v_fotos;
-	
+	this->dim_vfotos = 0;
 	cout<<"Destructor Normal"<<endl;
 }
 
 Admin :: ~Admin(){
+	this->total_consultas = 0;
 	cout<<"Destructor Admin"<<endl;
 }
 

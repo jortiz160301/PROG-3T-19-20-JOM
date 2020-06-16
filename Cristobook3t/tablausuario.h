@@ -1,6 +1,6 @@
 #include <iostream>
-using namespace std;
 #include "usuario.h"
+using namespace std;
 class TablaUsuarios{
 
 	private: 
@@ -31,6 +31,8 @@ class TablaUsuarios{
 		void insertarFotoUsuario(int posicion_usu, const Foto &fnueva, Normal* n);
 		void eliminarFotoUsuario(int posicion_usu, int posicion_foto);
 		void ordenarUsuariosNumFot();
+		void ordenarUsuariosLogin();
+		void eliminarPorMin(int min);
 		/**
 		 * @brief destructor de tablausuario
 		 * @version

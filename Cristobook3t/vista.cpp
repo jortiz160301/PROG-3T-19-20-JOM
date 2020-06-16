@@ -16,6 +16,11 @@ using namespace std;
 Vista::Vista(){
 	this->t = new TablaUsuarios;
 };
+Vista::~Vista(){
+	t = 0;
+	cout<<"Eliminando Vista"<<endl;
+}
+
 /*
 Admin Vista :: construirUsuario(Usuario* u){
     Admin* selecAdm;
@@ -82,6 +87,7 @@ void Vista :: testing(){
 
 void Vista :: crearUsuario(){
 	int opcion= 0;
+	bool usado=false;
 	string nombre_us;
 	string apellido_us;
 	string login_us;
@@ -100,6 +106,20 @@ void Vista :: crearUsuario(){
 	
 	cout<<"Introduzca el login del usuario: "<<endl;
 	cin>>login_us;
+	
+	do{//FILTRO PARA NO REPETIR LOGINS
+		usado = false;
+		for(int i = 0; i<t->getTotaltuplas(); i++){
+			if(login_us == t->getPunteroapuntero(i)->getLogin()){	
+				cout<<"Por favor, introduzca un nombre que no esté en uso."<<endl;
+				usado = true;
+			}
+		}
+		if(usado == true){
+			cin>>login_us;
+		}
+
+	}while(usado == true);
 	
 	cout<<"Introduzca el perfil del usuario: "<<endl;
 	cin>>perfil_us;
@@ -196,7 +216,8 @@ void Vista :: menu (){
 		cout<<"8: Imprimir la foto de un usuario"<<endl;
 		cout<<"9: Eliminar foto de un usuario"<<endl;
 		cout<<"10: Ordenar usuarios"<<endl;
-		cout<<"10: Salir."<<endl;
+		cout<<"11: Eliminar por mínimo de fotos"<<endl;
+		cout<<"12: Salir."<<endl;
 		
 		
 		FiltrarLetras(opcion);
@@ -222,6 +243,8 @@ void Vista :: menu (){
 		}else if(opcion ==10){
 			ordenarUsuariosVista();
 		}else if(opcion ==11){
+			eliminarPorMinVista();
+		}else if(opcion ==12){
 		 	eliminarTabla();
 		 	menu=false;
 		}
@@ -389,6 +412,7 @@ void Vista :: ImprimirVectorFotos(){
 
 void Vista :: eliminarTabla(){
 	this->t-> ~TablaUsuarios();
+	//this->~Vista();
 
 }
 /**
@@ -396,12 +420,18 @@ void Vista :: eliminarTabla(){
  * @version
  */
 void Vista :: imprimirUsuario(Usuario* u){
-	
+	/*if(Normal* n = dynamic_cast<Normal*>(u)){
+		cout<<n;
+	}else if(Admin* a = dynamic_cast<Admin*>(u)){
+		cout<<a;
+	}
+	*/
 	cout<<"Nombre: "<<u->getNombre()<<endl;
 	cout<<"Apellido: "<<u->getApellido()<<endl;
 	cout<<"Login: "<<u->getLogin()<<endl;
 	cout<<"Perfil: "<<u->getperfil_usuario()<<endl;
 	cout<<endl;
+	
 }
 
 /**
@@ -428,28 +458,17 @@ void Vista :: ordenarUsuariosVista(){
 		}
 	}while(opcion != 1 && opcion != 2);
 	
-	t->ordenarUsuariosNumFot();
-/*	if(opcion == 1){
-		
+	
+	if(opcion == 1){
+		t->ordenarUsuariosNumFot();
 	}else if(opcion == 2){
-		//t->ordenarUsuariosLogin();
-	}*/
+		t->ordenarUsuariosLogin();
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Vista :: eliminarPorMinVista(){
+	int min;
+	cout<<"Introduzca el mínimo de fotos a partir del cual quiere eliminar los usuarios"<<endl;
+	cin>>min;
+	t->eliminarPorMin(min);
+}
 

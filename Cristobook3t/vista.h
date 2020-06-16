@@ -1,3 +1,4 @@
+
 #include <iostream>
 using namespace std;
 #include "tablausuario.h"
@@ -14,6 +15,7 @@ class Vista{
 	public:
 		
 	Vista();
+	~Vista();
 	void menu();
 	//void debug();
 	void testing();
@@ -35,6 +37,7 @@ class Vista{
 	Usuario* construirUsuario(Usuario* u);
 	void crearUsuario();
 	void ordenarUsuariosVista();
+	void eliminarPorMinVista();
 	//void ordenar
 	//void testing();
 	//todos los cin

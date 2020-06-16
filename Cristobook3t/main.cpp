@@ -5,15 +5,10 @@ using namespace std;
 int main(){
 	Vista v;
 	v.menu();
-	/*v.crearTablaUsuarios();
+	/*Normal *Carlos;
+	Carlos = new Normal;
+	Carlos->setLogin("subnormal");
 	
-	
-	v. crearUsuario();
-	v.imprimirTabla();
-	
-	v.instertarFotoUsuario();
-	v.ImprimirVectorFotos();
-	//v.buscarUsuario(true);
-	//v.eliminarTabla();
-	v.imprimirTabla();*/
+	cout<<Carlos;
+	*/
 }
