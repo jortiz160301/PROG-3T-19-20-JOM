@@ -17,46 +17,11 @@ Vista::Vista(){
 	this->t = new TablaUsuarios;
 };
 Vista::~Vista(){
+	//t->~TablaUsuarios();
 	t = 0;
 	cout<<"Eliminando Vista"<<endl;
 }
 
-/*
-Admin Vista :: construirUsuario(Usuario* u){
-    Admin* selecAdm;
-	cout<<"guay"<<endl;
-	return selecAdm;
-}
-
-Normal Vista :: construirUsuario(Usuario* u){
-     Normal* selecNor;
-	cout<<"guay"<<endl;
-	return selecNor;
-}
-*/
-
-/*
-Usuario* Vista :: construirUsuario(Usuario* u){
-    Normal* selecNor;
-	Admin* selecAdm;
-	bool adm = false;
-	if(Normal* n = dynamic_cast<Normal*>(u)){
-		Normal(u);
-		selecAdm -> ~Admin();
-		adm = false;
-	}
-	else if(Admin* n = dynamic_cast<Admin*>(u)){
-		Admin(u);
-		selecNor -> ~Normal();
-		adm = true;
-	}
-	if(adm ==true){
-		return selecAdm;
-	}else if(adm == false){
-		return selecNor;
-	}
-}
-*/
 
 /**
  * @brief método que muestra el debug de las funciones
@@ -69,14 +34,74 @@ Usuario* Vista :: construirUsuario(Usuario* u){
  * @brief método de testing
  * @version
  */
+ 
+
 void Vista :: testing(){
-	cout<<"Creo una tabla de usuarios, le meto dos usuarios de ejemplo, imprimo y meto otros dos usuarios. "<<endl;
+	cout<<"Creo una tabla de usuarios con dos usuarios normales de ejemplo, imprimo e inserto otros dos usuarios (uno normal y otro admin)." <<endl;
+	cout<<"Imprimo otra vez y luego le inserto tres fotos al normal de login 'normal' "<<endl;
 	
 	crearTablaUsuarios();
 	imprimirTabla();
-	crearUsuario();
-	crearUsuario();
+	
+	Admin* nuevoAdm = new Admin();
+	
+	nuevoAdm->setNombre("prueba");
+	nuevoAdm->setApellido("admin");
+	nuevoAdm->setLogin("admin");
+	nuevoAdm->setperfil_usuario("admin");
+	
+	t->insertarUsuario(nuevoAdm);
+	
+	Normal* nuevoNor = new Normal();
+	
+	nuevoNor->setNombre("prueba");
+	nuevoNor->setApellido("normal");
+	nuevoNor->setLogin("normal");
+	nuevoNor->setperfil_usuario("normal");
+	
+	t->insertarUsuario(nuevoNor);
+	
 	imprimirTabla();
+	
+	cout<<"\nCreo tres fotos: "<<endl;
+	
+	Foto nueva1;
+	
+	nueva1.setRuta("ruta1");
+	nueva1.setTipo("tipo1");
+	nueva1.setTamanio(1);
+	
+	Foto nueva2;
+	
+	nueva2.setRuta("ruta2");
+	nueva2.setTipo("tipo2");
+	nueva2.setTamanio(2);
+	
+	Foto nueva3;
+	
+	nueva3.setRuta("ruta3");
+	nueva3.setTipo("tipo3");
+	nueva3.setTamanio(3);
+	
+	
+	cout<<"\nY se insertan en dicho usuario: "<<endl;
+	
+	t->insertarFotoUsuario(nueva1, nuevoNor);   
+	t->insertarFotoUsuario(nueva2, nuevoNor); 
+	t->insertarFotoUsuario(nueva3, nuevoNor); 
+	
+	
+	cout<<"\nImprimo su vector de fotos: "<<endl;
+	
+	for(int j= 0; j < nuevoNor->getdimFotos(); j++){
+		nuevoNor->getFoto(j).ImprimirFoto();
+	}
+	
+	cout<<"\nElimino la primera y la útima: "<<endl;
+
+	
+	
+	
 }
 
 
@@ -84,6 +109,9 @@ void Vista :: testing(){
  * @brief método de creación de usuarios, aquí se hace los sets según se tenga un usuario normal o admin
  * @version
  */
+ 
+ 
+ 
 
 void Vista :: crearUsuario(){
 	int opcion= 0;
@@ -155,6 +183,10 @@ void Vista :: crearUsuario(){
 	}
 	
 }
+
+
+
+
 /**
  * @brief método que crea la tabla de usuarios
  * @version
@@ -235,9 +267,9 @@ void Vista :: menu (){
 		}else if(opcion ==6){
 			insertarFotoUsuarioVista();
 		}else if(opcion ==7){
-			buscarUsuario(true);
+			buscarPosUsuarioVista(true);
 		}else if(opcion ==8){
-			ImprimirVectorFotos();
+			imprimirFotosUsuario();
 		}else if(opcion ==9){
 			eliminarFotoUsuarioVista();
 		}else if(opcion ==10){
@@ -258,57 +290,67 @@ void Vista :: menu (){
  * @brief método de búsqueda de usuarios
  * @version
  */
-int Vista :: buscarUsuario(bool imprimir){
-	
+int Vista :: buscarPosUsuarioVista(bool imprimir){
+		
 	bool encontrado = false;
 	string login_buscado;
 	int pos_enc = 0;
 	
-	
+	cout<<"Seleccione un usuario por su login: "<<endl;
 	do{
-		cout<<"Seleccione un usuario por su login: "<<endl;
+		
 		cin>>login_buscado;
-	
-		for(int i = 0; (i<t->getTotaltuplas()) && (encontrado == false); i++){	
-		
-			if((t->getPunteroapuntero(i))->getLogin() == login_buscado){
-				encontrado = true;
-				pos_enc = i;
-			}
-		
-		}
+		pos_enc = t->buscarPosUsuario(login_buscado);
 		
 		
-		
-		
-		if(encontrado == false && t->getTotaltuplas()!=0){
+		if(pos_enc >=0){
+			encontrado = true;
+		}else if(pos_enc <0 && t->getTotaltuplas()!=0){
 			cout<<"Usuario no encontrado. Escriba el nombre de nuevo."<<endl;
 		}else if(t->getTotaltuplas()==0){
-			cout<<"No hay usuarios en la tabla.\nCree nuevo usuario:"<<endl;
-			
-			encontrado == true; //para salir del bucle
+			cout<<"No hay usuarios en la tabla."<<endl;
+			encontrado = true; //para salir del bucle
 		}
+		
 		
 	}while(encontrado == false);
 	
 	if(imprimir == true){
 		cout<<"El usuario encontrado es: "<<endl;
-		imprimirUsuario(t->getPunteroapuntero(pos_enc));
+		t->getPunteroapuntero(pos_enc)->imprimirUsuario();
 	}else{
 		return pos_enc;
 	}
 }
 
+	/*
+Usuario* Vista :: buscarUsuarioVista(bool imprimir){
+
+	string login_buscado;
+	cout<<"Seleccione un usuario por su login: "<<endl;
+	cin>>login_buscado;
 	
+	BuscarUsuario(login_buscado);
 
 
-void Vista :: eliminarUsuarioVista(){		//t->getPunteroapuntero(posicion_usu)->
+}
+*/
+
+void Vista :: eliminarUsuarioVista(){		
 	cout<<"¿Qué usuario queire eliminar?"<<endl;
-	int posicion_usu = buscarUsuario(false);//obtengo la posición del usuario que busco
+
+	//obtengo la posición del usuario que busco
+	int posicion_usu = buscarPosUsuarioVista(false);
+	
+	//la paso a eliminar usuario
 	t->eliminarUsuario(posicion_usu);
 	
-	
 }
+
+
+
+
+
 int Vista :: buscarFotoVista(int pos_usu){	
 	
 	int pos_foto = 0;
@@ -362,12 +404,12 @@ void Normal::setFoto(int posicion, Foto f_in){
 void Vista :: insertarFotoUsuarioVista(){
 	
 	cout<<"Elija al usuario al que quiere introducir la foto: "<<endl;
-	int posicion_usu = buscarUsuario(false);
+	int posicion_usu = buscarPosUsuarioVista(false);
 
 	if(Normal *n = dynamic_cast<Normal*>(t->getPunteroapuntero(posicion_usu))) {
 		
 		Foto fnueva=crearFoto();
-		t->insertarFotoUsuario(posicion_usu, fnueva, n);
+		t->insertarFotoUsuario(fnueva, n);
 		cout<<"foto insertada"<<endl;
 		
 	}else{
@@ -377,7 +419,7 @@ void Vista :: insertarFotoUsuarioVista(){
 
 void Vista :: eliminarFotoUsuarioVista(){
 	cout<<"Elija al usuario al que quiere eliminar la foto: "<<endl;
-	int posicion_usu = buscarUsuario(false);
+	int posicion_usu = buscarPosUsuarioVista(false);
 	int posicion_foto = buscarFotoVista(posicion_usu);
 	
 	if(posicion_foto >= 0){ 
@@ -389,7 +431,7 @@ void Vista :: eliminarFotoUsuarioVista(){
  * @version
  */
 
-void Vista :: ImprimirVectorFotos(){
+void Vista :: imprimirTodosFotos(){
 	cout<<"IMPRIMIENDO"<<endl;
 
 	for(int i= 0; i<t->getTotaltuplas(); i++){
@@ -400,7 +442,7 @@ void Vista :: ImprimirVectorFotos(){
 			if(n->getdimFotos() >= 1){//no he podido juntar las dos condiciones
 				
 				for(int j= 0; j < n->getdimFotos(); j++){
-					n->ImprimirFoto(n->getFoto(j));
+					n->getFoto(j).ImprimirFoto();
 				}
 				cout<<endl;
 			}else{
@@ -410,22 +452,43 @@ void Vista :: ImprimirVectorFotos(){
 	}
 }
 
+
+void Vista :: imprimirFotosUsuario(){
+	
+	int pos_usu = buscarPosUsuarioVista(false);
+	if(Normal* n = dynamic_cast<Normal*>(t->getPunteroapuntero(pos_usu)) ) {
+		
+		if(n->getdimFotos() >= 1){//no he podido juntar las dos condiciones
+			
+			for(int j= 0; j < n->getdimFotos(); j++){
+				n->getFoto(j).ImprimirFoto();
+			}
+			cout<<endl;
+		}else{
+			cout<<"Este usuario no tiene fotos."<<endl;
+		}
+	}
+
+}
+
 void Vista :: eliminarTabla(){
 	this->t-> ~TablaUsuarios();
 	//this->~Vista();
 
 }
+
+
 /**
  * @brief método que imprime un usuario
  * @version
- */
+
 void Vista :: imprimirUsuario(Usuario* u){
 	/*if(Normal* n = dynamic_cast<Normal*>(u)){
 		cout<<n;
 	}else if(Admin* a = dynamic_cast<Admin*>(u)){
 		cout<<a;
 	}
-	*/
+
 	cout<<"Nombre: "<<u->getNombre()<<endl;
 	cout<<"Apellido: "<<u->getApellido()<<endl;
 	cout<<"Login: "<<u->getLogin()<<endl;
@@ -433,7 +496,7 @@ void Vista :: imprimirUsuario(Usuario* u){
 	cout<<endl;
 	
 }
-
+ */
 /**
  * @brief método que imprime la tabla de usuarios
  * @version
@@ -443,9 +506,11 @@ void Vista :: imprimirTabla(){
 	
 	for(int i=0; i<(t->getTotaltuplas());i++){
 	
-		imprimirUsuario(this->t->getPunteroapuntero(i));
+		this->t->getPunteroapuntero(i)->imprimirUsuario();
 	}
 }
+
+
 
 void Vista :: ordenarUsuariosVista(){
 	int opcion =0;
@@ -465,10 +530,39 @@ void Vista :: ordenarUsuariosVista(){
 		t->ordenarUsuariosLogin();
 	}
 }
+
+
+
+
 void Vista :: eliminarPorMinVista(){
 	int min;
 	cout<<"Introduzca el mínimo de fotos a partir del cual quiere eliminar los usuarios"<<endl;
 	cin>>min;
 	t->eliminarPorMin(min);
 }
+
+
+/*
+void Vista :: debugVista(bool debug){
+	
+	if(debug == true){
+		debug = false;
+		
+	}else if(debug == false){
+		debug = true;
+	}
+	
+	t->debugTabUs(debug);
+}
+
+*/
+
+
+
+
+
+
+
+
+
 

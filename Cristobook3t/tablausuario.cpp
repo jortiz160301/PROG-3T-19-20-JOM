@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 #include "tablausuario.h"
+
+
 TablaUsuarios :: TablaUsuarios(){
 	
 	punteroapuntero = new Usuario*[getTotaltuplas()];
@@ -50,11 +52,12 @@ Usuario** TablaUsuarios :: getVectorPunteroapuntero(){
 }
 
 TablaUsuarios :: ~TablaUsuarios(){
-	
-	for(int i = 0; i<getTotaltuplas(); i++){	
-		delete punteroapuntero[i];
+	cout<<this->getTotaltuplas()<<endl;
+	for(int i = 0; i<this->getTotaltuplas(); i++){	
+		delete this->punteroapuntero[i];
 	}
 	delete[] punteroapuntero;
+	punteroapuntero = 0;
 	
 	
 	cout<<"eliminando TablaUsuarios"<<endl;
@@ -64,58 +67,7 @@ TablaUsuarios :: ~TablaUsuarios(){
 
 
 void TablaUsuarios :: resizePP(int tamanio){	
-	cout<<"resize"<<end#include <iostream>
-using namespace std;
-#include "tablausuario.h"
-TablaUsuarios :: TablaUsuarios(){
-	
-	punteroapuntero = new Usuario*[getTotaltuplas()];
-	
-}
-
-
-
-
-TablaUsuarios :: TablaUsuarios(const TablaUsuarios* t){
-	punteroapuntero = new Usuario*[getTotaltuplas()];
-	this->totaltuplas = t->totaltuplas;
-	this->punteroapuntero = t->punteroapuntero;
-	for(int i=0;i<this->getTotaltuplas();i++){
-		
-		this->punteroapuntero[i] = t->punteroapuntero[i];
-	}
-	
-}
-
-void TablaUsuarios :: setVectorPunteroapuntero(Usuario** nuevo){
-	this-> punteroapuntero = nuevo;
-}
-
-
-
-void TablaUsuarios :: setPunteroapuntero(int posicion, Usuario* u){
-	punteroapuntero[posicion]=u;
-}
-
-void TablaUsuarios :: setTotaltuplas(int totaltuplas_in){
-	totaltuplas = totaltuplas_in;
-}
-
-
-
-Usuario* TablaUsuarios :: getPunteroapuntero(int posicion){
-	return punteroapuntero[posicion];
-}
-
-int TablaUsuarios :: getTotaltuplas(){
-	return totaltuplas;
-}
-
-Usuario** TablaUsuarios :: getVectorPunteroapuntero(){
-	return punteroapuntero;
-}
-
-TablaUsuarios :: ~Tablal;
+	cout<<"resize"<<endl;
 	Usuario** nuevo = new Usuario*[tamanio];
 	
 	if(tamanio > getTotaltuplas()){//si pedimos más tamaño del que tiene: 
@@ -166,14 +118,13 @@ void TablaUsuarios :: eliminarUsuario(int posicion_usu){
 	*/
 }
 
-void TablaUsuarios :: insertarFotoUsuario(int posicion_usu, const Foto &fnueva, Normal* n){
-		cout<<"Insertando foto..."<<endl;
-		n->resizevFotos(n->getdimFotos()+1);//se amuenta la dimensión del vector por 1
-		cout<<"DIM = "<<n->getdimFotos()<<endl;
-		n->setdimFotos(n->getdimFotos()+1);
-		n->setFoto(n->getdimFotos()-1, fnueva);//se añade la foto nueva a la ultima posición del vector  
+void TablaUsuarios :: insertarFotoUsuario(const Foto &fnueva, Normal* n){
+	cout<<"Insertando foto..."<<endl;
+	n->resizevFotos(n->getdimFotos()+1);//se amuenta la dimensión del vector por 1
+	n->setdimFotos(n->getdimFotos()+1);
+	n->setFoto(n->getdimFotos()-1, fnueva);//se añade la foto nueva a la ultima posición del vector  
 
-		
+	
 }
 
 
@@ -189,35 +140,10 @@ void TablaUsuarios :: eliminarFotoUsuario(int posicion_usu, int posicion_foto){
 		n->setdimFotos(n->getdimFotos()-1);//esto no se podría meter en el resize?no
 		
 	}
-}/*
-void OrdBurbuja(int v[], int util_v){
-	bool cambio = true;
-	
-	for(int izda=0; izda<util_v; izda++){
-		cambio = false;
-		
-		for(int i=util_v-1;i>izda; i--){
-			if(v[i]<v[i-1]){
-			bool cambio = true;
-			
-			int aux = v[i];
-			v[i] = v[i-1];
-			v[i-1]=aux;
-			}
-		}
-	}
-	for (int i = 0; i< util_v;i++){
-		cout<<v[i]<<" ";
-	} 
 }
 
-int main(){
 
-	const int DIM_V = 5;
-	int v[DIM_V]={3,2,6,1,2}; 
-	int util_v = 5;
-	OrdBurbuja(v, util_v);
-}*/
+
 void TablaUsuarios :: ordenarUsuariosNumFot(){
 	bool cambio = true;
 	Normal* aux_n = new Normal;
@@ -303,33 +229,63 @@ void TablaUsuarios :: eliminarPorMin(int min){
 			i++;
 		}
 	}
-
 }
 
 
+/**
+ * @brief 
+ * @param 
+ * @pre EL USUARIO EXISTE EN LA TABLA
+ * @post
+ * @author
+ * @version
+ *//*
+Usuario* TablaUsuarios :: BuscarUsuario(string login_buscado){
+	bool encontrado = false;
+	string login_buscado;
+	int pos_enc = 0;
+	
+	//BÚSQUEDA SECUENCIAL
+	do{
+		
+	
+		for(int i = 0; (i<this->getTotaltuplas()) && (encontrado == false); i++){	
+		
+			if((this->getPunteroapuntero(i))->getLogin() == login_buscado){
+				encontrado = true;
+				pos_enc = i;//OBTENGO LA POSICIÓN DEL USUARIO BUSCADO
+			}
+		
+		}
+		
+		
+	}while(encontrado == false);
+	
+	//DEVUELVO AL USUARIO QUE SE ENCUENTRA EN ESTA POSICIÓN
+	return this->getPunteroapuntero(pos_enc);
+	
+}
+*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int TablaUsuarios :: buscarPosUsuario(string login_buscado){
+	cout<<"TU"<<endl;
+	bool encontrado = false;
+	int pos_enc = 0;
+	
+	for(int i = 0; (i<getTotaltuplas()) && (encontrado == false); i++){	
+	
+		if((getPunteroapuntero(i))->getLogin() == login_buscado){
+			encontrado = true;
+			pos_enc = i;
+		}
+	
+	}
+	
+	if(encontrado == false){
+		pos_enc = -1;
+	}
+	
+	return pos_enc;
+		
+}
 

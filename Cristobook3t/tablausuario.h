@@ -28,11 +28,12 @@ class TablaUsuarios{
 		void insertarUsuario(Usuario* u);
 		void resizePP(int tamanio);
 		void eliminarUsuario(int posicion_usu);
-		void insertarFotoUsuario(int posicion_usu, const Foto &fnueva, Normal* n);
+		void insertarFotoUsuario(const Foto &fnueva, Normal* n);
 		void eliminarFotoUsuario(int posicion_usu, int posicion_foto);
 		void ordenarUsuariosNumFot();
 		void ordenarUsuariosLogin();
 		void eliminarPorMin(int min);
+		int buscarPosUsuario(string login_buscado);
 		/**
 		 * @brief destructor de tablausuario
 		 * @version

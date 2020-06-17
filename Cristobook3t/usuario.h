@@ -1,7 +1,8 @@
 #include <iostream>
-using namespace std;
 #include "foto.h"
 #include <stdlib.h>
+using namespace std;
+
 class Usuario{
 
 	protected: 
@@ -23,6 +24,7 @@ class Usuario{
 		string getNombre();
 		string getApellido();
 		string getperfil_usuario();
+		virtual void imprimirUsuario();
 		//Normal* operator=(Normal* u);
 		virtual ~Usuario();
 		
@@ -30,7 +32,7 @@ class Usuario{
 
 
 
-
+/******************************************** A D M I N **********************************************/
 
 class Admin : public Usuario{
 	protected: 
@@ -40,7 +42,8 @@ class Admin : public Usuario{
 	public:
 		Admin() : Usuario(){
 			this->total_consultas= 0;
-		}   
+		}
+		void imprimirUsuario();
 		Foto* getV_fotos();
 		void setTotalConsultas();
 		int getTotalConsultas();
@@ -54,9 +57,15 @@ class Admin : public Usuario{
 
 
 
+
+
+
+
+/******************************************** N O R M A L  **********************************************/
+
+
 class Normal : public Usuario{
 
-    
 	protected: 
 	Foto* v_fotos; 
 	//int totalFotosUsuario; //utiles del vector
@@ -66,9 +75,11 @@ class Normal : public Usuario{
 	
 	public:    
 		
+		
+		/*CONSTRUCTOR*/
+		
+		
 		Normal() : Usuario(){
-			
-		//	totalFotosUsuario=0;
 			dim_vfotos = 0;
 			saldo=0.0;
 			dim_vfotos=0;
@@ -78,6 +89,10 @@ class Normal : public Usuario{
 				exit(-1);
 			}
 		};
+		
+			
+		/*CONSTRUCTOR POR COPIA*/
+		
 		
 		Normal(Normal* n) : Usuario(){
 			this->login = n->login; //Debe ser único
@@ -100,35 +115,31 @@ class Normal : public Usuario{
 			cout<<"Demás variables copiando"<<endl;
 			
 			
-		//	this->totalFotosUsuario = n->totalFotosUsuario;
 			this->saldo = n->saldo;
 			this->dim_vfotos = n->dim_vfotos;
 			for(int i = 0; i<dim_vfotos; i++){
 				v_fotos[i] = n->v_fotos[i];
 			}
-			
-			
+
 			cout<<"saliendo del constructor"<<endl;
 		};
 		
 		
+		~Normal();
 		
-		
-		
+		void imprimirUsuario();
 		void ImprimirFoto(Foto f);
 		void setdimFotos(int dim_vfotos_in);
-	//	void settotalFotosUsuario(int totalFotosUsuario_in);
 		void setFoto(int posicion, Foto f_in);
 		int getdimFotos();
 		void resizevFotos(int tamanio);
 		int buscarFoto(const string ruta_buscada);
-		//int gettotalFotosUsuario();
 		Foto getFoto(int posicion);
 		Foto* getV_fotos();
 		void eliminarv_Fotos();
 		Normal operator=(Normal* u);
 		friend ostream& operator<<(ostream &flujo, Normal *n);
-		~Normal();
+		
 		
 	
 };

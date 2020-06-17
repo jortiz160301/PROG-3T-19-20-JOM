@@ -17,20 +17,21 @@ class Vista{
 	Vista();
 	~Vista();
 	void menu();
-	//void debug();
+	//void debugVista(bool debug);
 	void testing();
 	void crearTablaUsuarios();
 	void eliminarTabla();
-	void imprimirUsuario(Usuario* u);
+
 	void imprimirTabla();
 	void FiltrarLetras(int &num);
 	void resize(TablaUsuarios* t);
-	int buscarUsuario(bool imprimir);
+	int buscarPosUsuarioVista(bool imprimir);
 	void resizePP(int tamanio);
 	void eliminarUsuarioVista();
 	void eliminarFotoUsuarioVista();
 	Foto crearFoto();
-	void ImprimirVectorFotos();
+	void imprimirTodosFotos();
+	void imprimirFotosUsuario();
 	void insertarFotoUsuarioVista();
 	int buscarFotoVista(int pos_usu);
 //	void insertarUsuarioVista(Usuario* u);
@@ -38,7 +39,5 @@ class Vista{
 	void crearUsuario();
 	void ordenarUsuariosVista();
 	void eliminarPorMinVista();
-	//void ordenar
-	//void testing();
-	//todos los cin
+
 };

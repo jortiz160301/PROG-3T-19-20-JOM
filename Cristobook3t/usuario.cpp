@@ -2,6 +2,12 @@
 using namespace std;
 #include "usuario.h"
 
+
+
+
+/***********************************************************************************************************/
+/**************************** MÉTODOS DE USUARIO************************************************************/
+/***********************************************************************************************************/
 Usuario::Usuario(){
 	
 	this->login = "";
@@ -9,22 +15,19 @@ Usuario::Usuario(){
 	this->apellido = "";
 	this->perfil_usuario = "";
 }
-/*
-Usuario::Usuario(string nombre_in, string apellido_in, string login_in, string perfil_in){
-	
+
+Usuario :: ~Usuario(){
 	this->login = "";
 	this->nombre = "";
 	this->apellido = "";
 	this->perfil_usuario = "";
-	
-	this->setLogin(login_in);
-	this->setNombre(nombre_in);
-	this->setApellido(apellido_in);
-	this->setperfil_usuario(perfil_in);
-	
+	cout<<"Destructor Usuario"<<endl;
 }
 
-*/
+
+/**************************** SETS ************************************************************/
+
+
 void Usuario::setLogin(string login_in){
 	this->login = login_in;
 }
@@ -40,6 +43,27 @@ void Usuario::setApellido(string apellido_in){
 void Usuario::setperfil_usuario(string perfil_usuario_in){
 	this->perfil_usuario = perfil_usuario_in;
 }
+
+/**************************** GETS ************************************************************/
+
+string Usuario::getLogin(){
+	return this->login;
+}	
+
+string Usuario::getNombre(){
+	return this->nombre;
+}
+
+string Usuario::getApellido(){
+	return apellido;
+}
+
+string Usuario::getperfil_usuario(){
+	return perfil_usuario;
+}
+
+
+
 /*
 Usuario* Usuario::operator=(const Usuario* u){//hacerlo virtual? si. esto está mal
 	if(u != this){
@@ -57,6 +81,77 @@ Usuario* Usuario::operator=(const Usuario* u){//hacerlo virtual? si. esto está 
 		
 	return this;
 }*/
+
+
+/**
+ * @brief método que imprime un usuario
+ * @version
+ */
+void Usuario :: imprimirUsuario(){
+	/*if(Normal* n = dynamic_cast<Normal*>(u)){
+		cout<<n;
+	}else if(Admin* a = dynamic_cast<Admin*>(u)){
+		cout<<a;
+	}
+	*/
+	cout<<"Nombre: "<<this->getNombre()<<endl;
+	cout<<"Apellido: "<<this->getApellido()<<endl;
+	cout<<"Login: "<<this->getLogin()<<endl;
+	cout<<"Perfil: "<<this->getperfil_usuario()<<endl;
+	cout<<endl;
+	
+}
+
+
+
+
+
+/***********************************************************************************************************/
+/**************************** MÉTODOS DE NORMAL*************************************************************/
+/***********************************************************************************************************/
+
+
+Normal :: ~Normal(){
+	
+	delete[] this->v_fotos;
+	this->v_fotos = 0;
+	this->dim_vfotos = 0;
+	cout<<"Destructor Normal"<<endl;
+}
+
+/**************************** SETS *************************************************************/
+
+void Normal::setdimFotos(int dim_vfotos_in){
+	this->dim_vfotos = dim_vfotos_in;
+}
+
+
+void Normal::setFoto(int posicion, Foto f_in){
+	v_fotos[posicion] = f_in;
+}
+
+
+
+
+/**************************** GETS *************************************************************/
+
+int Normal::getdimFotos(){
+	return dim_vfotos;
+};
+
+Foto Normal::getFoto(int posicion){
+	return v_fotos[posicion];
+}
+Foto* Normal :: getV_fotos(){
+	return v_fotos;
+}
+
+void Normal :: eliminarv_Fotos(){
+	
+	delete[] v_fotos;
+}
+/**************************** MÉTODOS PROPIOS ***************************************************/
+
 Normal Normal::operator=(Normal* n){
 	if(n!= this){
 		delete[] n->v_fotos;
@@ -75,94 +170,8 @@ Normal Normal::operator=(Normal* n){
 }
 
 
-
-
-Admin* Admin::operator=(Admin* a){
-	//this->setTotalConsultas(a->getTotalConsultas());
-	this->setLogin(a->getLogin());
-	this->setNombre(a->getNombre());
-	this->setApellido(a->getApellido());
-	this->setperfil_usuario(a->getperfil_usuario());
-
-	return this;
-}
-
-
-
-void Normal::setdimFotos(int dim_vfotos_in){
-	this->dim_vfotos = dim_vfotos_in;
-}
-/*
-void Normal::settotalFotosUsuario(int totalFotosUsuario_in){
-	this->totalFotosUsuario = totalFotosUsuario_in;
-}*/
-
-void Normal::setFoto(int posicion, Foto f_in){
-	v_fotos[posicion] = f_in;
-}
-
-
-
-string Usuario::getLogin(){
-	return this->login;
-}	
-
-string Usuario::getNombre(){
-	return this->nombre;
-}
-
-string Usuario::getApellido(){
-	return apellido;
-}
-
-string Usuario::getperfil_usuario(){
-	return perfil_usuario;
-}
-
-int Normal::getdimFotos(){
-	return dim_vfotos;
-};
-/*
-int Normal::gettotalFotosUsuario(){
-	return totalFotosUsuario;
-}*/
-
-Foto Normal::getFoto(int posicion){
-	return v_fotos[posicion];
-}
-Foto* Normal :: getV_fotos(){
-	return v_fotos;
-}
-
-void Normal :: eliminarv_Fotos(){
-	
-	delete[] v_fotos;
-}
-
-/*
-void TablaUsuarios :: resizePP(int tamanio){	
-	cout<<"resize"<<endl;
-	Usuario** nuevo = new Usuario*[tamanio];
-	
-	if(tamanio > getTotaltuplas()){//si pedimos más tamaño del que tiene: 
-		
-		for(int i = 0; i < getTotaltuplas(); i++){
-			nuevo[i] = getPunteroapuntero(i);
-		}
-		
-	}else if(tamanio < getTotaltuplas()){// si pedimos menos tamaño del que tiene
-		
-		for(int i = 0; i < tamanio; i++){
-			nuevo[i] = getPunteroapuntero(i);
-		}
-	}
-	delete [] punteroapuntero;
-	setVectorPunteroapuntero(nuevo);
-	
-}
-*/
 void Normal :: resizevFotos(int tamanio){
-	cout<<"Resize fotos haciednose"<<endl;
+	cout<<"Resize fotos haciendose"<<endl;
 	Foto* nueva = new Foto[tamanio];
 	if(tamanio > getdimFotos()){
 		for(int i = 0; i < getdimFotos(); i++){
@@ -180,40 +189,7 @@ void Normal :: resizevFotos(int tamanio){
 	//v_fotos = new Foto[dim_vfotos];
 	cout<<"Resize fotos hecho"<<endl;
 }
-/**
- * @brief método que imprime una foto
- * @version
- */
-void Normal :: ImprimirFoto(Foto f){
-	cout<<"IMPRIMIENDO foto"<<endl;
-	cout<<"Ruta: "<<f.getRuta()<<endl;
-	cout<<"Tipo: "<<f.getTipo()<<endl;
-	cout<<"Tamaño: "<<f.getTamanio()<<endl;
-}
 
-
-
-ostream& operator<<(ostream &flujo, Normal *n){
-	
-	flujo<<"Nombre: "<<n->getNombre()<<endl;
-	flujo<<"Apellido: "<<n->getApellido()<<endl;
-	flujo<<"Login: "<<n->getLogin()<<endl;
-	flujo<<"Perfil: "<<n->getperfil_usuario()<<endl;
-	flujo<<endl;
-	
-	return flujo;
-}
-
-ostream& operator<<(ostream &flujo, Admin *a){
-	
-	flujo<<"Nombre: "<<a->getNombre()<<endl;
-	flujo<<"Apellido: "<<a->getApellido()<<endl;
-	flujo<<"Login: "<<a->getLogin()<<endl;
-	flujo<<"Perfil: "<<a->getperfil_usuario()<<endl;
-	flujo<<endl;
-	
-	return flujo;
-}
 
 int Normal :: buscarFoto(string ruta_buscada){
 	
@@ -245,23 +221,80 @@ int Normal :: buscarFoto(string ruta_buscada){
 
 
 
-Usuario :: ~Usuario(){
-	this->login = "";
-	this->nombre = "";
-	this->apellido = "";
-	this->perfil_usuario = "";
-	cout<<"Destructor Usuario"<<endl;
+ostream& operator<<(ostream &flujo, Normal *n){
+	
+	flujo<<"Nombre: "<<n->getNombre()<<endl;
+	flujo<<"Apellido: "<<n->getApellido()<<endl;
+	flujo<<"Login: "<<n->getLogin()<<endl;
+	flujo<<"Perfil: "<<n->getperfil_usuario()<<endl;
+	flujo<<endl;
+	
+	return flujo;
 }
 
-Normal :: ~Normal(){
-	delete[] this->v_fotos;
-	this->dim_vfotos = 0;
-	cout<<"Destructor Normal"<<endl;
+
+
+/**
+ * @brief método que imprime un usuario
+ * @version
+ */
+void Normal :: imprimirUsuario(){
+
+	cout<<"Nombre: "<<this->getNombre()<<endl;
+	cout<<"Apellido: "<<this->getApellido()<<endl;
+	cout<<"Login: "<<this->getLogin()<<endl;
+	cout<<"Perfil: "<<this->getperfil_usuario()<<endl;
+	cout<<"Número de fotos:  "<<this->getdimFotos()<<endl;
+	
+	cout<<endl;
+	
+	
+	
 }
+
+/***********************************************************************************************************/
+/**************************** MÉTODOS DE ADMIN*************************************************************/
+/***********************************************************************************************************/
+
 
 Admin :: ~Admin(){
 	this->total_consultas = 0;
 	cout<<"Destructor Admin"<<endl;
+}
+
+ostream& operator<<(ostream &flujo, Admin *a){
+	
+	flujo<<"Nombre: "<<a->getNombre()<<endl;
+	flujo<<"Apellido: "<<a->getApellido()<<endl;
+	flujo<<"Login: "<<a->getLogin()<<endl;
+	flujo<<"Perfil: "<<a->getperfil_usuario()<<endl;
+	flujo<<endl;
+	
+	return flujo;
+}
+
+
+Admin* Admin::operator=(Admin* a){
+	//this->setTotalConsultas(a->getTotalConsultas());
+	this->setLogin(a->getLogin());
+	this->setNombre(a->getNombre());
+	this->setApellido(a->getApellido());
+	this->setperfil_usuario(a->getperfil_usuario());
+
+	return this;
+}
+void Admin :: imprimirUsuario(){
+
+	cout<<"Nombre: "<<this->getNombre()<<endl;
+	cout<<"Apellido: "<<this->getApellido()<<endl;
+	cout<<"Login: "<<this->getLogin()<<endl;
+	cout<<"Perfil: "<<this->getperfil_usuario()<<endl;
+	cout<<"Número de consultas: "<<0<<endl;
+	
+	cout<<endl;
+	
+	
+	
 }
 
 

@@ -20,11 +20,13 @@ class Foto{
 		string getRuta();
 		string getTipo();
 		unsigned long int getTamanio();
+		
+		void ImprimirFoto();
 		~Foto(){
 			this->ruta = "";
 			this->tipo = "";
 			this->tamanio = 0;
-			cout<<"Foto"<<endl;
+			cout<<"Destruye Foto"<<endl;
 		}
 		//Foto* operator=(const Foto* f);
 		
