@@ -4,11 +4,9 @@ using namespace std;
 
 
 TablaUsuarios :: TablaUsuarios(){
-	
+	totaltuplas = 2;
 	punteroapuntero = new Usuario*[getTotaltuplas()];
-	
 }
-
 
 
 
@@ -26,8 +24,13 @@ TablaUsuarios :: TablaUsuarios(const TablaUsuarios* t){
 void TablaUsuarios :: setVectorPunteroapuntero(Usuario** nuevo){
 	this-> punteroapuntero = nuevo;
 }
-
-
+/*
+void TablaUsuarios :: debug(string mnsj){
+	if(debug == true){
+		cout<<mnsj<<endl;
+	}
+}
+*/
 
 void TablaUsuarios :: setPunteroapuntero(int posicion, Usuario* u){
 	punteroapuntero[posicion]=u;
@@ -128,22 +131,6 @@ void TablaUsuarios :: insertarFotoUsuario(const Foto &fnueva, Normal* n){
 }
 
 
-void TablaUsuarios :: eliminarFotoUsuario(int posicion_usu, int posicion_foto){
-	//cout<<getPunteroapuntero(posicion_usu)->getFoto(0).getRuta<<endl;
-	
-	if(Normal* n = dynamic_cast<Normal*>(getPunteroapuntero(posicion_usu))){
-		
-		for(int i = posicion_foto; i<n->getdimFotos()-1; i++){
-			n->setFoto(i, n->getFoto(i+1));
-		}
-		n->resizevFotos(n->getdimFotos()-1);
-		n->setdimFotos(n->getdimFotos()-1);//esto no se podría meter en el resize?no
-		
-	}
-}
-
-
-
 void TablaUsuarios :: ordenarUsuariosNumFot(){
 	bool cambio = true;
 	Normal* aux_n = new Normal;
@@ -232,43 +219,9 @@ void TablaUsuarios :: eliminarPorMin(int min){
 }
 
 
-/**
- * @brief 
- * @param 
- * @pre EL USUARIO EXISTE EN LA TABLA
- * @post
- * @author
- * @version
- *//*
-Usuario* TablaUsuarios :: BuscarUsuario(string login_buscado){
-	bool encontrado = false;
-	string login_buscado;
-	int pos_enc = 0;
-	
-	//BÚSQUEDA SECUENCIAL
-	do{
-		
-	
-		for(int i = 0; (i<this->getTotaltuplas()) && (encontrado == false); i++){	
-		
-			if((this->getPunteroapuntero(i))->getLogin() == login_buscado){
-				encontrado = true;
-				pos_enc = i;//OBTENGO LA POSICIÓN DEL USUARIO BUSCADO
-			}
-		
-		}
-		
-		
-	}while(encontrado == false);
-	
-	//DEVUELVO AL USUARIO QUE SE ENCUENTRA EN ESTA POSICIÓN
-	return this->getPunteroapuntero(pos_enc);
-	
-}
-*/
 
 int TablaUsuarios :: buscarPosUsuario(string login_buscado){
-	cout<<"TU"<<endl;
+
 	bool encontrado = false;
 	int pos_enc = 0;
 	
@@ -288,4 +241,5 @@ int TablaUsuarios :: buscarPosUsuario(string login_buscado){
 	return pos_enc;
 		
 }
+
 

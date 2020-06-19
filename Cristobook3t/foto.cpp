@@ -41,3 +41,9 @@ void Foto :: ImprimirFoto(){
 	cout<<"Tipo: "<<this->getTipo()<<endl;
 	cout<<"Tamaño: "<<this->getTamanio()<<endl;
 }
+/*
+void Foto :: muestraDebug(string mnsj){
+	if(debug == true){
+		cout<<mnsj<<endl;
+	}
+}*/

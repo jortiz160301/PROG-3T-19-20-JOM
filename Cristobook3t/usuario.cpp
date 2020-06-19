@@ -1,4 +1,10 @@
 #include <iostream>
+#define DEFAULT "\033[1;0m"
+#define ROJO "\033[1;41m"
+#define CIAN "\033[1;35m"
+#define AZUL "\033[1;34m"
+#define R "\033[1;31m"
+#define VERDE "\033[1;32m"
 using namespace std;
 #include "usuario.h"
 
@@ -25,6 +31,20 @@ Usuario :: ~Usuario(){
 }
 
 
+Usuario* Usuario::operator=(Usuario* u){
+
+	this->setLogin(u->getLogin());
+	this->setNombre(u->getNombre());
+	this->setApellido(u->getApellido());
+	this->setperfil_usuario(u->getperfil_usuario());
+
+	return this;
+}/*
+void Usuario :: debug(string mnsj){
+	if(debug == true){
+		cout<<mnsj<<endl;
+	}
+}*/
 /**************************** SETS ************************************************************/
 
 
@@ -220,13 +240,23 @@ int Normal :: buscarFoto(string ruta_buscada){
 }
 
 
+void Normal :: eliminarFotoUsuario(int posicion_foto){
+	
+	for(int i = posicion_foto; i<this->getdimFotos()-1; i++){
+		this->setFoto(i, this->getFoto(i+1));
+	}
+	this->resizevFotos(this->getdimFotos()-1);
+	this->setdimFotos(this->getdimFotos()-1);//esto no se podría meter en el resize?no
+	
+	
+}
 
 ostream& operator<<(ostream &flujo, Normal *n){
 	
-	flujo<<"Nombre: "<<n->getNombre()<<endl;
-	flujo<<"Apellido: "<<n->getApellido()<<endl;
-	flujo<<"Login: "<<n->getLogin()<<endl;
-	flujo<<"Perfil: "<<n->getperfil_usuario()<<endl;
+	flujo<<CIAN<<"Nombre: "<<DEFAULT<<n->getNombre()<<endl;
+	flujo<<CIAN<<"Apellido: "<<DEFAULT<<n->getApellido()<<endl;
+	flujo<<CIAN<<"Login: "<<DEFAULT<<n->getLogin()<<endl;
+	flujo<<CIAN<<"Perfil: "<<DEFAULT<<n->getperfil_usuario()<<endl;
 	flujo<<endl;
 	
 	return flujo;
@@ -240,11 +270,11 @@ ostream& operator<<(ostream &flujo, Normal *n){
  */
 void Normal :: imprimirUsuario(){
 
-	cout<<"Nombre: "<<this->getNombre()<<endl;
-	cout<<"Apellido: "<<this->getApellido()<<endl;
-	cout<<"Login: "<<this->getLogin()<<endl;
-	cout<<"Perfil: "<<this->getperfil_usuario()<<endl;
-	cout<<"Número de fotos:  "<<this->getdimFotos()<<endl;
+	cout<<CIAN<<"Nombre: "<<DEFAULT<<this->getNombre()<<endl;
+	cout<<CIAN<<"Apellido: "<<DEFAULT<<this->getApellido()<<endl;
+	cout<<CIAN<<"Login: "<<DEFAULT<<this->getLogin()<<endl;
+	cout<<CIAN<<"Perfil: "<<DEFAULT<<this->getperfil_usuario()<<endl;
+	cout<<CIAN<<"Número de fotos:  "<<DEFAULT<<this->getdimFotos()<<endl;
 	
 	cout<<endl;
 	
@@ -264,10 +294,10 @@ Admin :: ~Admin(){
 
 ostream& operator<<(ostream &flujo, Admin *a){
 	
-	flujo<<"Nombre: "<<a->getNombre()<<endl;
-	flujo<<"Apellido: "<<a->getApellido()<<endl;
-	flujo<<"Login: "<<a->getLogin()<<endl;
-	flujo<<"Perfil: "<<a->getperfil_usuario()<<endl;
+	flujo<<R<<"Nombre: "<<DEFAULT<<a->getNombre()<<endl;
+	flujo<<R<<"Apellido: "<<DEFAULT<<a->getApellido()<<endl;
+	flujo<<R<<"Login: "<<DEFAULT<<a->getLogin()<<endl;
+	flujo<<R<<"Perfil: "<<DEFAULT<<a->getperfil_usuario()<<endl;
 	flujo<<endl;
 	
 	return flujo;
@@ -285,16 +315,17 @@ Admin* Admin::operator=(Admin* a){
 }
 void Admin :: imprimirUsuario(){
 
-	cout<<"Nombre: "<<this->getNombre()<<endl;
-	cout<<"Apellido: "<<this->getApellido()<<endl;
-	cout<<"Login: "<<this->getLogin()<<endl;
-	cout<<"Perfil: "<<this->getperfil_usuario()<<endl;
-	cout<<"Número de consultas: "<<0<<endl;
+	cout<<R<<"Nombre: "<<DEFAULT<<this->getNombre()<<endl;
+	cout<<R<<"Apellido: "<<DEFAULT<<this->getApellido()<<endl;
+	cout<<R<<"Login: "<<DEFAULT<<this->getLogin()<<endl;
+	cout<<R<<"Perfil: "<<DEFAULT<<this->getperfil_usuario()<<endl;
+	cout<<R<<"Número de consultas: "<<DEFAULT<<0<<endl;
 	
 	cout<<endl;
 	
 	
 	
 }
+
 
 

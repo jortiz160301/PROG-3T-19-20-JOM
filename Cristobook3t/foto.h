@@ -16,6 +16,7 @@ class Foto{
 		void setRuta(string ruta_in);
 		void setTipo(string tipo_in);
 		void setTamanio(unsigned long int tamanio_in);
+		//void muestraDebug(string mnsj);
 		
 		string getRuta();
 		string getTipo();
@@ -28,6 +29,7 @@ class Foto{
 			this->tamanio = 0;
 			cout<<"Destruye Foto"<<endl;
 		}
-		//Foto* operator=(const Foto* f);
+		
 		
 };
+

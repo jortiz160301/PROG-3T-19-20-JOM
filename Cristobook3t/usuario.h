@@ -15,17 +15,21 @@ class Usuario{
 	public: 
 		Usuario();
 		
-		//Usuario(string nombre_in, string apellido_in, string login_in, string perfil_in);
 		void setLogin(string login_in);
 		void setNombre(string nombre_in);
 		void setApellido(string apellido_in);
 		void setperfil_usuario(string perfil_usuario_in);
+	//	void debug(string mnsj);
 		string getLogin();	
 		string getNombre();
 		string getApellido();
 		string getperfil_usuario();
 		virtual void imprimirUsuario();
-		//Normal* operator=(Normal* u);
+	/**
+	 * @brief sobrecarga del operador = 
+	 * @param se le pasa un puntero a usuario, que va a se copiado
+	 */
+		virtual Usuario* operator=(Usuario* u);
 		virtual ~Usuario();
 		
 };
@@ -43,13 +47,24 @@ class Admin : public Usuario{
 		Admin() : Usuario(){
 			this->total_consultas= 0;
 		}
+		/**
+		 * @brief imprime un administrador con los artibutos de Usuario pero también con total consultas
+		 * @param 
+	 	*/
 		void imprimirUsuario();
-		Foto* getV_fotos();
 		void setTotalConsultas();
 		int getTotalConsultas();
-		void buscarFotografias(string cadena);
+		/**
+		 * @brief sobrecarga del operador = 
+		 * @param se le pasa un puntero a admin, que va a se copiado
+		 */
 		Admin* operator=(Admin* a);
-		friend ostream& operator<<(ostream &flujo, const Admin *a);
+		
+		/**
+		 * @brief sobrecarga del operador << para poder imprimir el usuario
+		 * @param se le pasa un puntero a usuario, que va a se copiado y flujo, lo que va a devolver
+		 */
+		friend ostream& operator<<(ostream &flujo, Admin *a);
 		~Admin();
 	
 };
@@ -129,40 +144,45 @@ class Normal : public Usuario{
 		
 		void imprimirUsuario();
 		void ImprimirFoto(Foto f);
+		void eliminarFotoUsuario(int posicion_foto);
+		
 		void setdimFotos(int dim_vfotos_in);
 		void setFoto(int posicion, Foto f_in);
 		int getdimFotos();
+		
+		/**
+		 * @brief método que ajusta la dimensión del vector de fotos del usuario normal
+		 * @param int tamanio es la diensión que tendrá el nuevo vector
+	 	*/
 		void resizevFotos(int tamanio);
+		/**
+		 * @brief busca una foto para el método eliminarFoto
+		 * @param se le pasa lastring ruta_buscada para encontrar es foto
+		 */
 		int buscarFoto(const string ruta_buscada);
 		Foto getFoto(int posicion);
+		/**
+		 * @brief devuelve la dirección del vector de fotos
+		 * @param 
+		 */
 		Foto* getV_fotos();
+		/**
+		 * @brief elimina el vector de fotos del usuario normal
+		 * @param 
+		 */
 		void eliminarv_Fotos();
-		Normal operator=(Normal* u);
+		/**
+		 * @brief sobrecarga del operador = 
+		 * @param se le pasa un puntero a usuario, que va a se copiado correctamente con su vector de fotos
+		 */
+		virtual Normal operator=(Normal* u);
+		/**
+		 * @brief sobrecarga del operador << para poder imprimir el usuario
+		 * @param se le pasa un puntero a usuario, que va a se copiado y flujo, lo que va a devolver
+		 */
 		friend ostream& operator<<(ostream &flujo, Normal *n);
 		
 		
 	
 };
-/*
 
-Usuario* Usuario::operator=(Usuario* u){
-			if(u!= this){
-				if(Normal* n = dynamic_cast<Normal*>(u)){
-					delete[] n->v_fotos;
-					this->dim_vfotos = n->dim_vfotos;
-					this->v_fotos = new Foto[n->dim_vfotos];
-					this->saldo = n->saldo;
-					for(int i = 0; i>this->dim_vfotos; i++){
-						this->v_fotos[i] = n->v_fotos[i];
-					}
-					
-				}else if(Admin* a = dynamic_cast<Admin*>(u)){
-						this->setTotalConsultas(a->getTotalConsultas());
-				}
-				this->setLogin(u->getLogin());
-				this->setNombre(u->getNombre());
-				this->setApellido(u->getApellido());
-				this->setperfil_usuario(u->getperfil_usuario());
-			}
-			return *this;
-}*/
